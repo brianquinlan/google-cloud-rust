@@ -13,8 +13,12 @@
 # limitations under the License.
 
 [package]
-name        = "google-cloud-auth"
-version     = "0.22.4"
+name = "google-cloud-auth"
+# ATTENTION: if you change the major version, remember to change the major
+#     version of all downstream dependencies. For details see:
+#         https://github.com/googleapis/google-cloud-rust/issues/3237
+#         https://github.com/googleapis/google-cloud-rust/issues/3265
+version     = "1.0.0"
 description = "Google Cloud Client Libraries for Rust - Authentication"
 build       = "build.rs"
 # Inherit other attributes from the workspace.

@@ -25,6 +25,7 @@ use google_cloud_gax::{
 };
 use google_cloud_storage::client::{Storage, StorageControl};
 use google_cloud_storage::model::bucket::{
+    ObjectRetention,
     iam_config::UniformBucketLevelAccess,
     {HierarchicalNamespace, IamConfig},
 };
@@ -209,10 +210,14 @@ pub async fn run_bucket_examples(buckets: &mut Vec<String>) -> anyhow::Result<()
     buckets::get_autoclass::sample(&client, &id).await?;
     tracing::info!("running enable_requester_pays example");
     buckets::enable_requester_pays::sample(&client, &id).await?;
-    tracing::info!("running get_requester_pays_status example");
-    buckets::get_requester_pays_status::sample(&client, &id).await?;
-    tracing::info!("running disable_requester_pays example");
-    buckets::disable_requester_pays::sample(&client, &id).await?;
+    #[cfg(feature = "skipped-integration-tests")]
+    {
+        // TODO(#3291): fix these samples to provide user project.
+        tracing::info!("running get_requester_pays_status example");
+        buckets::get_requester_pays_status::sample(&client, &id).await?;
+        tracing::info!("running disable_requester_pays example");
+        buckets::disable_requester_pays::sample(&client, &id).await?;
+    }
 
     let id = random_bucket_id();
     buckets.push(id.clone());
@@ -388,6 +393,7 @@ pub async fn run_object_examples(buckets: &mut Vec<String>) -> anyhow::Result<()
         "object-to-update",
         "object-to-read",
         "deleted-object-name",
+        "object-with-contexts",
         "compose-source-object-1",
         "compose-source-object-2",
         "update-storage-class",
@@ -423,6 +429,12 @@ pub async fn run_object_examples(buckets: &mut Vec<String>) -> anyhow::Result<()
     let content = tokio::fs::read_to_string(downloaded_file_path).await?;
     assert_eq!(content, "hello world from file");
 
+    tracing::info!("running download_public_file example");
+    // Public object containing 2B of data.
+    let public_bucket = "gcp-public-data-arco-era5";
+    let public_object = "ar/1959-2022-1h-240x121_equiangular_with_poles_conservative.zarr/.zattrs";
+    objects::download_public_file::sample(public_bucket, public_object).await?;
+
     tracing::info!("running download_byte_range example");
     objects::download_byte_range::sample(&client, &id, "object-to-download.txt", 4, 10).await?;
 
@@ -441,6 +453,12 @@ pub async fn run_object_examples(buckets: &mut Vec<String>) -> anyhow::Result<()
     objects::set_metadata::sample(&control, &id).await?;
     tracing::info!("running get_metadata example");
     objects::get_metadata::sample(&control, &id).await?;
+    tracing::info!("running print_file_acl example");
+    objects::print_file_acl::sample(&control, &id).await?;
+    tracing::info!("running print_file_acl_for_user example");
+    objects::print_file_acl_for_user::sample(&control, &id).await?;
+    tracing::info!("running get_kms_key example");
+    objects::get_kms_key::sample(&control, &id).await?;
     tracing::info!("running set_event_based_hold example");
     objects::set_event_based_hold::sample(&control, &id).await?;
     tracing::info!("running release_event_based_hold example");
@@ -463,9 +481,23 @@ pub async fn run_object_examples(buckets: &mut Vec<String>) -> anyhow::Result<()
     objects::change_file_storage_class::sample(&control, &id).await?;
     tracing::info!("running compose_file example");
     objects::compose_file::sample(&control, &id).await?;
-
     tracing::info!("running move_file example");
     objects::move_file::sample(&control, &id, &id).await?;
+
+    #[cfg(feature = "skipped-integration-tests")]
+    {
+        // Skip, the internal Google policies prevent granting public access to
+        // any buckets in our test projects.
+        tracing::info!("running make_public example");
+        objects::make_public::sample(&control, &id).await?;
+    }
+
+    tracing::info!("running set_object_contexts example");
+    objects::set_object_contexts::sample(&control, &id).await?;
+    tracing::info!("running list_object_contexts example");
+    objects::list_object_contexts::sample(&control, &id).await?;
+    tracing::info!("running get_object_contexts example");
+    objects::get_object_contexts::sample(&control, &id).await?;
 
     let id = random_bucket_id();
     buckets.push(id.clone());
@@ -498,7 +530,7 @@ pub async fn run_object_examples(buckets: &mut Vec<String>) -> anyhow::Result<()
     objects::object_csek_to_cmek::sample(&control, &id, "csek_file.txt", new_csek_key, &kms_key)
         .await?;
 
-    tracing::info!("create bucket for object ACL examples");
+    tracing::info!("create bucket for object ACL, retention examples");
     let id = random_bucket_id();
     buckets.push(id.clone());
     let _ = control
@@ -510,7 +542,8 @@ pub async fn run_object_examples(buckets: &mut Vec<String>) -> anyhow::Result<()
                 .set_project(format!("projects/{project_id}"))
                 .set_iam_config(IamConfig::new().set_uniform_bucket_level_access(
                     UniformBucketLevelAccess::new().set_enabled(false),
-                )),
+                ))
+                .set_object_retention(ObjectRetention::new().set_enabled(true)),
         )
         .send()
         .await?;
@@ -520,6 +553,8 @@ pub async fn run_object_examples(buckets: &mut Vec<String>) -> anyhow::Result<()
     objects::add_file_owner::sample(&control, &id, &service_account).await?;
     tracing::info!("running remove_file_owner example");
     objects::remove_file_owner::sample(&control, &id, &service_account).await?;
+    tracing::info!("running set_object_retention_policy example");
+    objects::set_object_retention_policy::sample(&control, &id).await?;
 
     Ok(())
 }

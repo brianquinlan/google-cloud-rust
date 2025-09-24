@@ -30,6 +30,7 @@ run-showcase-tests = []
 [dependencies]
 anyhow.workspace      = true
 bytes.workspace       = true
+chrono                = { workspace = true, features = ["now"] }
 crc32c.workspace      = true
 futures.workspace     = true
 auth.workspace        = true
@@ -59,6 +60,10 @@ path    = "../../src/generated/cloud/bigquery/v2"
 [dependencies.firestore]
 package = "google-cloud-firestore"
 path    = "../../src/firestore"
+
+[dependencies.pubsub]
+package = "google-cloud-pubsub"
+path    = "../../src/pubsub"
 
 [dependencies.showcase]
 package = "google-cloud-showcase-v1beta1"
