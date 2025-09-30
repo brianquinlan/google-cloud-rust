@@ -16,7 +16,7 @@
 
 name: google_cloud_protobuf
 description: The Google Cloud client library for the Core Protobuf Types.
-version: 0.1.0
+version: 0.1.1
 
 environment:
   sdk: ^3.9.0
@@ -24,7 +24,7 @@ environment:
 resolution: workspace
 
 dependencies:
-  google_cloud_gax: any
+  google_cloud_gax: ^0.1.0
 
 dev_dependencies:
   test: any

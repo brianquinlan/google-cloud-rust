@@ -16,7 +16,7 @@
 
 name: google_cloud_api
 description: The Google Cloud client library for the Service Config API.
-version: 0.1.0
+version: 0.1.1
 
 environment:
   sdk: ^3.9.0
@@ -24,8 +24,8 @@ environment:
 resolution: workspace
 
 dependencies:
-  google_cloud_gax: any
-  google_cloud_protobuf: any
+  google_cloud_gax: ^0.1.0
+  google_cloud_protobuf: ^0.1.0
 
 dev_dependencies:
   lints: any

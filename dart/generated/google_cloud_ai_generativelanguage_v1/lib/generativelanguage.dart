@@ -34,7 +34,7 @@ import 'package:http/http.dart' as http;
 
 /// API for using Large Models that generate multimodal content and have
 /// additional capabilities beyond text generation.
-class GenerativeService {
+final class GenerativeService {
   static const String _host = 'generativelanguage.googleapis.com';
 
   final ServiceClient _client;
@@ -125,7 +125,7 @@ class GenerativeService {
 }
 
 /// Provides methods for getting metadata information about Generative Models.
-class ModelService {
+final class ModelService {
   static const String _host = 'generativelanguage.googleapis.com';
 
   final ServiceClient _client;
@@ -195,7 +195,7 @@ class ModelService {
 }
 
 /// A collection of source attributions for a piece of content.
-class CitationMetadata extends ProtoMessage {
+final class CitationMetadata extends ProtoMessage {
   static const String fullyQualifiedName =
       'google.ai.generativelanguage.v1.CitationMetadata';
 
@@ -226,7 +226,7 @@ class CitationMetadata extends ProtoMessage {
 }
 
 /// A citation to a source for a portion of a specific response.
-class CitationSource extends ProtoMessage {
+final class CitationSource extends ProtoMessage {
   static const String fullyQualifiedName =
       'google.ai.generativelanguage.v1.CitationSource';
 
@@ -287,7 +287,7 @@ class CitationSource extends ProtoMessage {
 /// A `Content` includes a `role` field designating the producer of the `Content`
 /// and a `parts` field containing multi-part data that contains the content of
 /// the message turn.
-class Content extends ProtoMessage {
+final class Content extends ProtoMessage {
   static const String fullyQualifiedName =
       'google.ai.generativelanguage.v1.Content';
 
@@ -332,7 +332,7 @@ class Content extends ProtoMessage {
 ///
 /// A `Part` must have a fixed IANA MIME type identifying the type and subtype
 /// of the media if the `inline_data` field is filled with raw bytes.
-class Part extends ProtoMessage {
+final class Part extends ProtoMessage {
   static const String fullyQualifiedName =
       'google.ai.generativelanguage.v1.Part';
 
@@ -369,7 +369,7 @@ class Part extends ProtoMessage {
 /// Raw media bytes.
 ///
 /// Text should not be sent as raw bytes, use the 'text' field.
-class Blob extends ProtoMessage {
+final class Blob extends ProtoMessage {
   static const String fullyQualifiedName =
       'google.ai.generativelanguage.v1.Blob';
 
@@ -410,7 +410,7 @@ class Blob extends ProtoMessage {
 }
 
 /// Request to generate a completion from the model.
-class GenerateContentRequest extends ProtoMessage {
+final class GenerateContentRequest extends ProtoMessage {
   static const String fullyQualifiedName =
       'google.ai.generativelanguage.v1.GenerateContentRequest';
 
@@ -491,7 +491,7 @@ class GenerateContentRequest extends ProtoMessage {
 
 /// Configuration options for model generation and outputs. Not all parameters
 /// are configurable for every model.
-class GenerationConfig extends ProtoMessage {
+final class GenerationConfig extends ProtoMessage {
   static const String fullyQualifiedName =
       'google.ai.generativelanguage.v1.GenerationConfig';
 
@@ -674,7 +674,7 @@ class GenerationConfig extends ProtoMessage {
 ///    prompt (check `prompt_feedback`)
 ///  - Reports feedback on each candidate in `finish_reason` and
 ///    `safety_ratings`.
-class GenerateContentResponse extends ProtoMessage {
+final class GenerateContentResponse extends ProtoMessage {
   static const String fullyQualifiedName =
       'google.ai.generativelanguage.v1.GenerateContentResponse';
 
@@ -733,7 +733,7 @@ class GenerateContentResponse extends ProtoMessage {
 
 /// A set of the feedback metadata the prompt specified in
 /// `GenerateContentRequest.content`.
-class GenerateContentResponse_PromptFeedback extends ProtoMessage {
+final class GenerateContentResponse_PromptFeedback extends ProtoMessage {
   static const String fullyQualifiedName =
       'google.ai.generativelanguage.v1.GenerateContentResponse.PromptFeedback';
 
@@ -781,7 +781,8 @@ class GenerateContentResponse_PromptFeedback extends ProtoMessage {
 }
 
 /// Specifies the reason why the prompt was blocked.
-class GenerateContentResponse_PromptFeedback_BlockReason extends ProtoEnum {
+final class GenerateContentResponse_PromptFeedback_BlockReason
+    extends ProtoEnum {
   /// Default value. This value is unused.
   static const blockReasonUnspecified =
       GenerateContentResponse_PromptFeedback_BlockReason(
@@ -825,7 +826,7 @@ class GenerateContentResponse_PromptFeedback_BlockReason extends ProtoEnum {
 }
 
 /// Metadata on the generation request's token usage.
-class GenerateContentResponse_UsageMetadata extends ProtoMessage {
+final class GenerateContentResponse_UsageMetadata extends ProtoMessage {
   static const String fullyQualifiedName =
       'google.ai.generativelanguage.v1.GenerateContentResponse.UsageMetadata';
 
@@ -880,7 +881,7 @@ class GenerateContentResponse_UsageMetadata extends ProtoMessage {
 }
 
 /// A response candidate generated from the model.
-class Candidate extends ProtoMessage {
+final class Candidate extends ProtoMessage {
   static const String fullyQualifiedName =
       'google.ai.generativelanguage.v1.Candidate';
 
@@ -989,7 +990,7 @@ class Candidate extends ProtoMessage {
 }
 
 /// Defines the reason why the model stopped generating tokens.
-class Candidate_FinishReason extends ProtoEnum {
+final class Candidate_FinishReason extends ProtoEnum {
   /// Default value. This value is unused.
   static const finishReasonUnspecified = Candidate_FinishReason(
     'FINISH_REASON_UNSPECIFIED',
@@ -1043,7 +1044,7 @@ class Candidate_FinishReason extends ProtoEnum {
 }
 
 /// Logprobs Result
-class LogprobsResult extends ProtoMessage {
+final class LogprobsResult extends ProtoMessage {
   static const String fullyQualifiedName =
       'google.ai.generativelanguage.v1.LogprobsResult';
 
@@ -1084,7 +1085,7 @@ class LogprobsResult extends ProtoMessage {
 }
 
 /// Candidate for the logprobs token and score.
-class LogprobsResult_Candidate extends ProtoMessage {
+final class LogprobsResult_Candidate extends ProtoMessage {
   static const String fullyQualifiedName =
       'google.ai.generativelanguage.v1.LogprobsResult.Candidate';
 
@@ -1130,7 +1131,7 @@ class LogprobsResult_Candidate extends ProtoMessage {
 }
 
 /// Candidates with top log probabilities at each decoding step.
-class LogprobsResult_TopCandidates extends ProtoMessage {
+final class LogprobsResult_TopCandidates extends ProtoMessage {
   static const String fullyQualifiedName =
       'google.ai.generativelanguage.v1.LogprobsResult.TopCandidates';
 
@@ -1158,7 +1159,7 @@ class LogprobsResult_TopCandidates extends ProtoMessage {
 }
 
 /// Metadata related to retrieval in the grounding flow.
-class RetrievalMetadata extends ProtoMessage {
+final class RetrievalMetadata extends ProtoMessage {
   static const String fullyQualifiedName =
       'google.ai.generativelanguage.v1.RetrievalMetadata';
 
@@ -1201,7 +1202,7 @@ class RetrievalMetadata extends ProtoMessage {
 }
 
 /// Metadata returned to client when grounding is enabled.
-class GroundingMetadata extends ProtoMessage {
+final class GroundingMetadata extends ProtoMessage {
   static const String fullyQualifiedName =
       'google.ai.generativelanguage.v1.GroundingMetadata';
 
@@ -1270,7 +1271,7 @@ class GroundingMetadata extends ProtoMessage {
 }
 
 /// Google search entry point.
-class SearchEntryPoint extends ProtoMessage {
+final class SearchEntryPoint extends ProtoMessage {
   static const String fullyQualifiedName =
       'google.ai.generativelanguage.v1.SearchEntryPoint';
 
@@ -1311,7 +1312,7 @@ class SearchEntryPoint extends ProtoMessage {
 }
 
 /// Grounding chunk.
-class GroundingChunk extends ProtoMessage {
+final class GroundingChunk extends ProtoMessage {
   static const String fullyQualifiedName =
       'google.ai.generativelanguage.v1.GroundingChunk';
 
@@ -1336,7 +1337,7 @@ class GroundingChunk extends ProtoMessage {
 }
 
 /// Chunk from the web.
-class GroundingChunk_Web extends ProtoMessage {
+final class GroundingChunk_Web extends ProtoMessage {
   static const String fullyQualifiedName =
       'google.ai.generativelanguage.v1.GroundingChunk.Web';
 
@@ -1368,7 +1369,7 @@ class GroundingChunk_Web extends ProtoMessage {
 }
 
 /// Segment of the content.
-class Segment extends ProtoMessage {
+final class Segment extends ProtoMessage {
   static const String fullyQualifiedName =
       'google.ai.generativelanguage.v1.Segment';
 
@@ -1421,7 +1422,7 @@ class Segment extends ProtoMessage {
 }
 
 /// Grounding support.
-class GroundingSupport extends ProtoMessage {
+final class GroundingSupport extends ProtoMessage {
   static const String fullyQualifiedName =
       'google.ai.generativelanguage.v1.GroundingSupport';
 
@@ -1468,7 +1469,7 @@ class GroundingSupport extends ProtoMessage {
 }
 
 /// Request containing the `Content` for the model to embed.
-class EmbedContentRequest extends ProtoMessage {
+final class EmbedContentRequest extends ProtoMessage {
   static const String fullyQualifiedName =
       'google.ai.generativelanguage.v1.EmbedContentRequest';
 
@@ -1545,7 +1546,7 @@ class EmbedContentRequest extends ProtoMessage {
 }
 
 /// A list of floats representing an embedding.
-class ContentEmbedding extends ProtoMessage {
+final class ContentEmbedding extends ProtoMessage {
   static const String fullyQualifiedName =
       'google.ai.generativelanguage.v1.ContentEmbedding';
 
@@ -1568,7 +1569,7 @@ class ContentEmbedding extends ProtoMessage {
 }
 
 /// The response to an `EmbedContentRequest`.
-class EmbedContentResponse extends ProtoMessage {
+final class EmbedContentResponse extends ProtoMessage {
   static const String fullyQualifiedName =
       'google.ai.generativelanguage.v1.EmbedContentResponse';
 
@@ -1593,7 +1594,7 @@ class EmbedContentResponse extends ProtoMessage {
 }
 
 /// Batch request to get embeddings from the model for a list of prompts.
-class BatchEmbedContentsRequest extends ProtoMessage {
+final class BatchEmbedContentsRequest extends ProtoMessage {
   static const String fullyQualifiedName =
       'google.ai.generativelanguage.v1.BatchEmbedContentsRequest';
 
@@ -1638,7 +1639,7 @@ class BatchEmbedContentsRequest extends ProtoMessage {
 }
 
 /// The response to a `BatchEmbedContentsRequest`.
-class BatchEmbedContentsResponse extends ProtoMessage {
+final class BatchEmbedContentsResponse extends ProtoMessage {
   static const String fullyQualifiedName =
       'google.ai.generativelanguage.v1.BatchEmbedContentsResponse';
 
@@ -1670,7 +1671,7 @@ class BatchEmbedContentsResponse extends ProtoMessage {
 ///
 /// Models may tokenize text differently, so each model may return a different
 /// `token_count`.
-class CountTokensRequest extends ProtoMessage {
+final class CountTokensRequest extends ProtoMessage {
   static const String fullyQualifiedName =
       'google.ai.generativelanguage.v1.CountTokensRequest';
 
@@ -1733,7 +1734,7 @@ class CountTokensRequest extends ProtoMessage {
 /// A response from `CountTokens`.
 ///
 /// It returns the model's `token_count` for the `prompt`.
-class CountTokensResponse extends ProtoMessage {
+final class CountTokensResponse extends ProtoMessage {
   static const String fullyQualifiedName =
       'google.ai.generativelanguage.v1.CountTokensResponse';
 
@@ -1762,7 +1763,7 @@ class CountTokensResponse extends ProtoMessage {
 }
 
 /// Information about a Generative Language Model.
-class Model extends ProtoMessage {
+final class Model extends ProtoMessage {
   static const String fullyQualifiedName =
       'google.ai.generativelanguage.v1.Model';
 
@@ -1916,7 +1917,7 @@ class Model extends ProtoMessage {
 }
 
 /// Request for getting information about a specific Model.
-class GetModelRequest extends ProtoMessage {
+final class GetModelRequest extends ProtoMessage {
   static const String fullyQualifiedName =
       'google.ai.generativelanguage.v1.GetModelRequest';
 
@@ -1946,7 +1947,7 @@ class GetModelRequest extends ProtoMessage {
 }
 
 /// Request for listing all Models.
-class ListModelsRequest extends ProtoMessage {
+final class ListModelsRequest extends ProtoMessage {
   static const String fullyQualifiedName =
       'google.ai.generativelanguage.v1.ListModelsRequest';
 
@@ -1995,7 +1996,7 @@ class ListModelsRequest extends ProtoMessage {
 }
 
 /// Response from `ListModel` containing a paginated list of Models.
-class ListModelsResponse extends ProtoMessage {
+final class ListModelsResponse extends ProtoMessage {
   static const String fullyQualifiedName =
       'google.ai.generativelanguage.v1.ListModelsResponse';
 
@@ -2041,7 +2042,7 @@ class ListModelsResponse extends ProtoMessage {
 /// Content is classified for safety across a number of
 /// harm categories and the probability of the harm classification is included
 /// here.
-class SafetyRating extends ProtoMessage {
+final class SafetyRating extends ProtoMessage {
   static const String fullyQualifiedName =
       'google.ai.generativelanguage.v1.SafetyRating';
 
@@ -2092,7 +2093,7 @@ class SafetyRating extends ProtoMessage {
 ///
 /// The classification system gives the probability of the content being
 /// unsafe. This does not indicate the severity of harm for a piece of content.
-class SafetyRating_HarmProbability extends ProtoEnum {
+final class SafetyRating_HarmProbability extends ProtoEnum {
   /// Probability is unspecified.
   static const harmProbabilityUnspecified = SafetyRating_HarmProbability(
     'HARM_PROBABILITY_UNSPECIFIED',
@@ -2123,7 +2124,7 @@ class SafetyRating_HarmProbability extends ProtoEnum {
 ///
 /// Passing a safety setting for a category changes the allowed probability that
 /// content is blocked.
-class SafetySetting extends ProtoMessage {
+final class SafetySetting extends ProtoMessage {
   static const String fullyQualifiedName =
       'google.ai.generativelanguage.v1.SafetySetting';
 
@@ -2164,7 +2165,7 @@ class SafetySetting extends ProtoMessage {
 }
 
 /// Block at and beyond a specified harm probability.
-class SafetySetting_HarmBlockThreshold extends ProtoEnum {
+final class SafetySetting_HarmBlockThreshold extends ProtoEnum {
   /// Threshold is unspecified.
   static const harmBlockThresholdUnspecified = SafetySetting_HarmBlockThreshold(
     'HARM_BLOCK_THRESHOLD_UNSPECIFIED',
@@ -2201,7 +2202,7 @@ class SafetySetting_HarmBlockThreshold extends ProtoEnum {
 }
 
 /// Type of task for which the embedding will be used.
-class TaskType extends ProtoEnum {
+final class TaskType extends ProtoEnum {
   /// Unset value, which will default to one of the other enum values.
   static const taskTypeUnspecified = TaskType('TASK_TYPE_UNSPECIFIED');
 
@@ -2238,7 +2239,7 @@ class TaskType extends ProtoEnum {
 ///
 /// These categories cover various kinds of harms that developers
 /// may wish to adjust.
-class HarmCategory extends ProtoEnum {
+final class HarmCategory extends ProtoEnum {
   /// Category is unspecified.
   static const harmCategoryUnspecified = HarmCategory(
     'HARM_CATEGORY_UNSPECIFIED',

@@ -23,6 +23,8 @@ import 'package:google_cloud_ai_generativelanguage_v1/generativelanguage.dart';
 import 'package:google_cloud_rpc/rpc.dart';
 import 'package:googleapis_auth/auth_io.dart' as auth;
 
+// $ gcloud auth application-default login
+
 void main(List<String> args) async {
   if (args.length != 2) {
     print('usage: dart bin/generative_api.dart <api-key> <prompt>');
@@ -32,7 +34,14 @@ void main(List<String> args) async {
   final apiKey = args[0];
   final prompt = args[1];
 
-  final client = auth.clientViaApiKey(apiKey);
+  //  final client = auth.clientViaApiKey(apiKey);
+  // gcloud auth application-default login --scopes=https://www.googleapis.com/auth/cloud-platform,https://www.googleapis.com/auth/generative-language.retriever
+  final client = await auth.clientViaApplicationDefaultCredentials(
+    scopes: [
+      'https://www.googleapis.com/auth/cloud-platform',
+      'https://www.googleapis.com/auth/generative-language.retriever',
+    ],
+  );
   final service = GenerativeService(client: client);
   final request = GenerateContentRequest(
     model: 'models/gemini-2.5-flash',
