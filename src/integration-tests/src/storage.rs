@@ -110,20 +110,6 @@ impl Seek for TestDataSource {
 }
 
 pub async fn objects(builder: storage::builder::storage::ClientBuilder) -> Result<()> {
-    // Enable a basic subscriber. Useful to troubleshoot problems and visually
-    // verify tracing is doing something.
-    #[cfg(feature = "log-integration-tests")]
-    let _guard = {
-        use tracing_subscriber::fmt::format::FmtSpan;
-        let subscriber = tracing_subscriber::fmt()
-            .with_level(true)
-            .with_thread_ids(true)
-            .with_span_events(FmtSpan::NEW | FmtSpan::CLOSE)
-            .finish();
-
-        tracing::subscriber::set_default(subscriber)
-    };
-
     // Create a temporary bucket for the test.
     let (control, bucket) = create_test_bucket().await?;
 
@@ -196,20 +182,6 @@ pub async fn objects(builder: storage::builder::storage::ClientBuilder) -> Resul
 pub async fn objects_customer_supplied_encryption(
     builder: storage::builder::storage::ClientBuilder,
 ) -> Result<()> {
-    // Enable a basic subscriber. Useful to troubleshoot problems and visually
-    // verify tracing is doing something.
-    #[cfg(feature = "log-integration-tests")]
-    let _guard = {
-        use tracing_subscriber::fmt::format::FmtSpan;
-        let subscriber = tracing_subscriber::fmt()
-            .with_level(true)
-            .with_thread_ids(true)
-            .with_span_events(FmtSpan::NEW | FmtSpan::CLOSE)
-            .finish();
-
-        tracing::subscriber::set_default(subscriber)
-    };
-
     // Create a temporary bucket for the test.
     let (control, bucket) = create_test_bucket().await?;
 
@@ -256,20 +228,6 @@ pub async fn objects_customer_supplied_encryption(
 }
 
 pub async fn objects_large_file(builder: storage::builder::storage::ClientBuilder) -> Result<()> {
-    // Enable a basic subscriber. Useful to troubleshoot problems and visually
-    // verify tracing is doing something.
-    #[cfg(feature = "log-integration-tests")]
-    let _guard = {
-        use tracing_subscriber::fmt::format::FmtSpan;
-        let subscriber = tracing_subscriber::fmt()
-            .with_level(true)
-            .with_thread_ids(true)
-            .with_span_events(FmtSpan::NEW | FmtSpan::CLOSE)
-            .finish();
-
-        tracing::subscriber::set_default(subscriber)
-    };
-
     // Create a temporary bucket for the test.
     let (control, bucket) = create_test_bucket().await?;
 
@@ -348,20 +306,6 @@ pub async fn objects_large_file(builder: storage::builder::storage::ClientBuilde
 }
 
 pub async fn upload_buffered(builder: storage::builder::storage::ClientBuilder) -> Result<()> {
-    // Enable a basic subscriber. Useful to troubleshoot problems and visually
-    // verify tracing is doing something.
-    #[cfg(feature = "log-integration-tests")]
-    let _guard = {
-        use tracing_subscriber::fmt::format::FmtSpan;
-        let subscriber = tracing_subscriber::fmt()
-            .with_level(true)
-            .with_thread_ids(true)
-            .with_span_events(FmtSpan::NEW | FmtSpan::CLOSE)
-            .finish();
-
-        tracing::subscriber::set_default(subscriber)
-    };
-
     // Create a temporary bucket for the test.
     let (control, bucket) = create_test_bucket().await?;
     let client = builder.build().await?;
@@ -403,20 +347,6 @@ pub async fn upload_buffered(builder: storage::builder::storage::ClientBuilder) 
 pub async fn upload_buffered_resumable_known_size(
     builder: storage::builder::storage::ClientBuilder,
 ) -> Result<()> {
-    // Enable a basic subscriber. Useful to troubleshoot problems and visually
-    // verify tracing is doing something.
-    #[cfg(feature = "log-integration-tests")]
-    let _guard = {
-        use tracing_subscriber::fmt::format::FmtSpan;
-        let subscriber = tracing_subscriber::fmt()
-            .with_level(true)
-            .with_thread_ids(true)
-            .with_span_events(FmtSpan::NEW | FmtSpan::CLOSE)
-            .finish();
-
-        tracing::subscriber::set_default(subscriber)
-    };
-
     // Create a temporary bucket for the test.
     let (control, bucket) = create_test_bucket().await?;
     let client = builder.build().await?;
@@ -462,20 +392,6 @@ pub async fn upload_buffered_resumable_known_size(
 pub async fn upload_buffered_resumable_unknown_size(
     builder: storage::builder::storage::ClientBuilder,
 ) -> Result<()> {
-    // Enable a basic subscriber. Useful to troubleshoot problems and visually
-    // verify tracing is doing something.
-    #[cfg(feature = "log-integration-tests")]
-    let _guard = {
-        use tracing_subscriber::fmt::format::FmtSpan;
-        let subscriber = tracing_subscriber::fmt()
-            .with_level(true)
-            .with_thread_ids(true)
-            .with_span_events(FmtSpan::NEW | FmtSpan::CLOSE)
-            .finish();
-
-        tracing::subscriber::set_default(subscriber)
-    };
-
     // Create a temporary bucket for the test.
     let (control, bucket) = create_test_bucket().await?;
     let client = builder.build().await?;
@@ -532,20 +448,6 @@ pub async fn upload_buffered_resumable_unknown_size(
 pub async fn upload_unbuffered_resumable_known_size(
     builder: storage::builder::storage::ClientBuilder,
 ) -> Result<()> {
-    // Enable a basic subscriber. Useful to troubleshoot problems and visually
-    // verify tracing is doing something.
-    #[cfg(feature = "log-integration-tests")]
-    let _guard = {
-        use tracing_subscriber::fmt::format::FmtSpan;
-        let subscriber = tracing_subscriber::fmt()
-            .with_level(true)
-            .with_thread_ids(true)
-            .with_span_events(FmtSpan::NEW | FmtSpan::CLOSE)
-            .finish();
-
-        tracing::subscriber::set_default(subscriber)
-    };
-
     // Create a temporary bucket for the test.
     let (control, bucket) = create_test_bucket().await?;
     let client = builder.build().await?;
@@ -591,20 +493,6 @@ pub async fn upload_unbuffered_resumable_known_size(
 pub async fn upload_unbuffered_resumable_unknown_size(
     builder: storage::builder::storage::ClientBuilder,
 ) -> Result<()> {
-    // Enable a basic subscriber. Useful to troubleshoot problems and visually
-    // verify tracing is doing something.
-    #[cfg(feature = "log-integration-tests")]
-    let _guard = {
-        use tracing_subscriber::fmt::format::FmtSpan;
-        let subscriber = tracing_subscriber::fmt()
-            .with_level(true)
-            .with_thread_ids(true)
-            .with_span_events(FmtSpan::NEW | FmtSpan::CLOSE)
-            .finish();
-
-        tracing::subscriber::set_default(subscriber)
-    };
-
     // Create a temporary bucket for the test.
     let (control, bucket) = create_test_bucket().await?;
     let client = builder.build().await?;
@@ -665,20 +553,6 @@ pub async fn abort_upload(
     builder: storage::builder::storage::ClientBuilder,
     bucket_name: &str,
 ) -> Result<()> {
-    // Enable a basic subscriber. Useful to troubleshoot problems and visually
-    // verify tracing is doing something.
-    #[cfg(feature = "log-integration-tests")]
-    let _guard = {
-        use tracing_subscriber::fmt::format::FmtSpan;
-        let subscriber = tracing_subscriber::fmt()
-            .with_level(true)
-            .with_thread_ids(true)
-            .with_span_events(FmtSpan::NEW | FmtSpan::CLOSE)
-            .finish();
-
-        tracing::subscriber::set_default(subscriber)
-    };
-
     tracing::info!("abort_upload test, using bucket {}", bucket_name);
 
     // Create a temporary bucket for the test.
@@ -784,20 +658,6 @@ pub async fn ranged_reads(
     builder: storage::builder::storage::ClientBuilder,
     bucket_name: &str,
 ) -> Result<()> {
-    // Enable a basic subscriber. Useful to troubleshoot problems and visually
-    // verify tracing is doing something.
-    #[cfg(feature = "log-integration-tests")]
-    let _guard = {
-        use tracing_subscriber::fmt::format::FmtSpan;
-        let subscriber = tracing_subscriber::fmt()
-            .with_level(true)
-            .with_thread_ids(true)
-            .with_span_events(FmtSpan::NEW | FmtSpan::CLOSE)
-            .finish();
-
-        tracing::subscriber::set_default(subscriber)
-    };
-
     tracing::info!("ranged reads test, using bucket {bucket_name}");
     let client = builder.build().await?;
     const VEXING: &str = "how vexingly quick daft zebras jump";
@@ -867,20 +727,6 @@ pub async fn checksums(
     builder: storage::builder::storage::ClientBuilder,
     bucket_name: &str,
 ) -> Result<()> {
-    // Enable a basic subscriber. Useful to troubleshoot problems and visually
-    // verify tracing is doing something.
-    #[cfg(feature = "log-integration-tests")]
-    let _guard = {
-        use tracing_subscriber::fmt::format::FmtSpan;
-        let subscriber = tracing_subscriber::fmt()
-            .with_level(true)
-            .with_thread_ids(true)
-            .with_span_events(FmtSpan::NEW | FmtSpan::CLOSE)
-            .finish();
-
-        tracing::subscriber::set_default(subscriber)
-    };
-
     tracing::info!("checksums test, using bucket {bucket_name}");
 
     let client = builder.build().await?;
@@ -952,20 +798,6 @@ pub async fn object_names(
     control: storage::client::StorageControl,
     bucket_name: &str,
 ) -> Result<()> {
-    // Enable a basic subscriber. Useful to troubleshoot problems and visually
-    // verify tracing is doing something.
-    #[cfg(feature = "log-integration-tests")]
-    let _guard = {
-        use tracing_subscriber::fmt::format::FmtSpan;
-        let subscriber = tracing_subscriber::fmt()
-            .with_level(true)
-            .with_thread_ids(true)
-            .with_span_events(FmtSpan::NEW | FmtSpan::CLOSE)
-            .finish();
-
-        tracing::subscriber::set_default(subscriber)
-    };
-
     tracing::info!("object names test, using bucket {bucket_name}");
 
     let client = builder.build().await?;
@@ -1083,6 +915,7 @@ pub async fn create_test_bucket() -> Result<(StorageControl, Bucket)> {
                 .set_labels([("integration-test", "true")]),
         )
         .with_backoff_policy(test_backoff())
+        .with_idempotency(true)
         .send()
         .await?;
     tracing::info!("SUCCESS on create_bucket: {create:?}");
@@ -1090,20 +923,6 @@ pub async fn create_test_bucket() -> Result<(StorageControl, Bucket)> {
 }
 
 pub async fn buckets(builder: storage::builder::storage_control::ClientBuilder) -> Result<()> {
-    // Enable a basic subscriber. Useful to troubleshoot problems and visually
-    // verify tracing is doing something.
-    #[cfg(feature = "log-integration-tests")]
-    let _guard = {
-        use tracing_subscriber::fmt::format::FmtSpan;
-        let subscriber = tracing_subscriber::fmt()
-            .with_level(true)
-            .with_thread_ids(true)
-            .with_span_events(FmtSpan::NEW | FmtSpan::CLOSE)
-            .finish();
-
-        tracing::subscriber::set_default(subscriber)
-    };
-
     let project_id = crate::project_id()?;
     let client = builder.build().await?;
 
@@ -1129,6 +948,7 @@ pub async fn buckets(builder: storage::builder::storage_control::ClientBuilder) 
                 )),
         )
         .with_backoff_policy(test_backoff())
+        .with_idempotency(true)
         .send()
         .await?;
     println!("SUCCESS on create_bucket: {create:?}");
@@ -1158,14 +978,19 @@ pub async fn buckets(builder: storage::builder::storage_control::ClientBuilder) 
     folders(&client, &bucket_name).await?;
 
     println!("\nTesting delete_bucket()");
-    client.delete_bucket().set_name(bucket_name).send().await?;
+    client
+        .delete_bucket()
+        .set_name(bucket_name)
+        .with_idempotency(true)
+        .send()
+        .await?;
     println!("SUCCESS on delete_bucket");
 
     Ok(())
 }
 
 async fn buckets_iam(client: &StorageControl, bucket_name: &str) -> Result<()> {
-    let service_account = crate::service_account_for_iam_tests()?;
+    let service_account = crate::test_service_account()?;
 
     println!("\nTesting get_iam_policy()");
     let policy = client
@@ -1196,6 +1021,7 @@ async fn buckets_iam(client: &StorageControl, bucket_name: &str) -> Result<()> {
         .set_resource(bucket_name)
         .set_update_mask(wkt::FieldMask::default().set_paths(["bindings"]))
         .set_policy(new_policy)
+        .with_idempotency(true)
         .send()
         .await?;
     println!("SUCCESS on set_iam_policy = {policy:?}");

@@ -106,6 +106,7 @@ members = [
   "src/generated/cloud/cloudsecuritycompliance/v1",
   "src/generated/cloud/commerce/consumer/procurement/v1",
   "src/generated/cloud/common",
+  "src/generated/cloud/compute/v1",
   "src/generated/cloud/confidentialcomputing/v1",
   "src/generated/cloud/config/v1",
   "src/generated/cloud/configdelivery/v1",
@@ -308,7 +309,7 @@ rand               = { default-features = false, version = "0.9.2" }
 reqwest            = { default-features = false, version = "0.12.23", features = ["json"] }
 rustls             = { default-features = false, version = "0.23" }
 rustls-pemfile     = { default-features = false, version = "2" }
-serde              = { default-features = false, version = "1.0.226", features = ["serde_derive"] }
+serde              = { default-features = false, version = "1.0.228", features = ["serde_derive"] }
 serde_json         = { default-features = false, version = "1.0.132", features = ["std"] }
 serde_with         = { default-features = false, version = "3", features = ["base64", "macros", "std"] }
 sha2               = { default-features = false, version = "0.10" }
@@ -328,26 +329,31 @@ clap               = { default-features = false, version = "4" }
 parse-size         = { default-features = false, version = "1" }
 humantime          = { default-features = false, version = "2" }
 
+opentelemetry-semantic-conventions = { default-features = false, version = "0.30.0", features = [
+  "semconv_experimental",
+] }
+
 # Test packages
-anyhow         = { default-features = false, version = "1.0.99", features = ["std"] }
-axum           = { default-features = false, version = "0.8" }
-flate2         = { default-features = false, version = "1" }
-httptest       = { default-features = false, version = "0.16.3" }
-md5            = { default-features = false, version = "0.8" }
-mockall        = { default-features = false, version = "0.13" }
-multer         = { default-features = false, version = "3" }
-mutants        = { default-features = false, version = "0.0.3" }
-num-bigint-dig = { default-features = false, version = "0.8" }
-paste          = { default-features = false, version = "1" }
-regex          = { default-features = false, version = "1" }
-rsa            = { default-features = false, version = "0.9.8" }
-rustc_version  = { default-features = false, version = "0.4" }
-scoped-env     = { default-features = false, version = "2.1" }
-serial_test    = { default-features = false, version = "3" }
-tempfile       = { default-features = false, version = "3.22" }
-test-case      = { default-features = false, version = "3.3" }
-tokio-stream   = { default-features = false, version = "0.1" }
-tokio-test     = { default-features = false, version = "0.4" }
+anyhow            = { default-features = false, version = "1.0.100", features = ["std"] }
+axum              = { default-features = false, version = "0.8" }
+flate2            = { default-features = false, version = "1" }
+httptest          = { default-features = false, version = "0.16.3" }
+md5               = { default-features = false, version = "0.8" }
+mockall           = { default-features = false, version = "0.13" }
+multer            = { default-features = false, version = "3" }
+mutants           = { default-features = false, version = "0.0.3" }
+num-bigint-dig    = { default-features = false, version = "0.8" }
+paste             = { default-features = false, version = "1" }
+regex             = { default-features = false, version = "1" }
+rsa               = { default-features = false, version = "0.9.8" }
+rustc_version     = { default-features = false, version = "0.4" }
+scoped-env        = { default-features = false, version = "2.1" }
+serial_test       = { default-features = false, version = "3" }
+static_assertions = { default-features = false, version = "1.1" }
+tempfile          = { default-features = false, version = "3.23" }
+test-case         = { default-features = false, version = "3.3" }
+tokio-stream      = { default-features = false, version = "0.1" }
+tokio-test        = { default-features = false, version = "0.4" }
 
 # Local packages used as dependencies
 auth                          = { version = "1", path = "src/auth", package = "google-cloud-auth" }

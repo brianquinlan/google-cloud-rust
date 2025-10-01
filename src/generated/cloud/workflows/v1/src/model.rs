@@ -171,30 +171,62 @@ impl Workflow {
     }
 
     /// Sets the value of [name][crate::model::Workflow::name].
+    ///
+    /// # Example
+    /// ```
+    /// # use google_cloud_workflows_v1::model::Workflow;
+    /// let x = Workflow::new().set_name("example");
+    /// ```
     pub fn set_name<T: std::convert::Into<std::string::String>>(mut self, v: T) -> Self {
         self.name = v.into();
         self
     }
 
     /// Sets the value of [description][crate::model::Workflow::description].
+    ///
+    /// # Example
+    /// ```
+    /// # use google_cloud_workflows_v1::model::Workflow;
+    /// let x = Workflow::new().set_description("example");
+    /// ```
     pub fn set_description<T: std::convert::Into<std::string::String>>(mut self, v: T) -> Self {
         self.description = v.into();
         self
     }
 
     /// Sets the value of [state][crate::model::Workflow::state].
+    ///
+    /// # Example
+    /// ```
+    /// # use google_cloud_workflows_v1::model::Workflow;
+    /// use google_cloud_workflows_v1::model::workflow::State;
+    /// let x = Workflow::new().set_state(State::default());
+    /// ```
     pub fn set_state<T: std::convert::Into<crate::model::workflow::State>>(mut self, v: T) -> Self {
         self.state = v.into();
         self
     }
 
     /// Sets the value of [revision_id][crate::model::Workflow::revision_id].
+    ///
+    /// # Example
+    /// ```
+    /// # use google_cloud_workflows_v1::model::Workflow;
+    /// let x = Workflow::new().set_revision_id("example");
+    /// ```
     pub fn set_revision_id<T: std::convert::Into<std::string::String>>(mut self, v: T) -> Self {
         self.revision_id = v.into();
         self
     }
 
     /// Sets the value of [create_time][crate::model::Workflow::create_time].
+    ///
+    /// # Example
+    /// ```
+    /// # use google_cloud_workflows_v1::model::Workflow;
+    /// use wkt::Timestamp;
+    /// let x = Workflow::new().set_create_time(Timestamp::default()/* use setters */);
+    /// ```
     pub fn set_create_time<T>(mut self, v: T) -> Self
     where
         T: std::convert::Into<wkt::Timestamp>,
@@ -204,6 +236,14 @@ impl Workflow {
     }
 
     /// Sets or clears the value of [create_time][crate::model::Workflow::create_time].
+    ///
+    /// # Example
+    /// ```
+    /// # use google_cloud_workflows_v1::model::Workflow;
+    /// use wkt::Timestamp;
+    /// let x = Workflow::new().set_or_clear_create_time(Some(Timestamp::default()/* use setters */));
+    /// let x = Workflow::new().set_or_clear_create_time(None::<Timestamp>);
+    /// ```
     pub fn set_or_clear_create_time<T>(mut self, v: std::option::Option<T>) -> Self
     where
         T: std::convert::Into<wkt::Timestamp>,
@@ -213,6 +253,13 @@ impl Workflow {
     }
 
     /// Sets the value of [update_time][crate::model::Workflow::update_time].
+    ///
+    /// # Example
+    /// ```
+    /// # use google_cloud_workflows_v1::model::Workflow;
+    /// use wkt::Timestamp;
+    /// let x = Workflow::new().set_update_time(Timestamp::default()/* use setters */);
+    /// ```
     pub fn set_update_time<T>(mut self, v: T) -> Self
     where
         T: std::convert::Into<wkt::Timestamp>,
@@ -222,6 +269,14 @@ impl Workflow {
     }
 
     /// Sets or clears the value of [update_time][crate::model::Workflow::update_time].
+    ///
+    /// # Example
+    /// ```
+    /// # use google_cloud_workflows_v1::model::Workflow;
+    /// use wkt::Timestamp;
+    /// let x = Workflow::new().set_or_clear_update_time(Some(Timestamp::default()/* use setters */));
+    /// let x = Workflow::new().set_or_clear_update_time(None::<Timestamp>);
+    /// ```
     pub fn set_or_clear_update_time<T>(mut self, v: std::option::Option<T>) -> Self
     where
         T: std::convert::Into<wkt::Timestamp>,
@@ -231,6 +286,13 @@ impl Workflow {
     }
 
     /// Sets the value of [revision_create_time][crate::model::Workflow::revision_create_time].
+    ///
+    /// # Example
+    /// ```
+    /// # use google_cloud_workflows_v1::model::Workflow;
+    /// use wkt::Timestamp;
+    /// let x = Workflow::new().set_revision_create_time(Timestamp::default()/* use setters */);
+    /// ```
     pub fn set_revision_create_time<T>(mut self, v: T) -> Self
     where
         T: std::convert::Into<wkt::Timestamp>,
@@ -240,6 +302,14 @@ impl Workflow {
     }
 
     /// Sets or clears the value of [revision_create_time][crate::model::Workflow::revision_create_time].
+    ///
+    /// # Example
+    /// ```
+    /// # use google_cloud_workflows_v1::model::Workflow;
+    /// use wkt::Timestamp;
+    /// let x = Workflow::new().set_or_clear_revision_create_time(Some(Timestamp::default()/* use setters */));
+    /// let x = Workflow::new().set_or_clear_revision_create_time(None::<Timestamp>);
+    /// ```
     pub fn set_or_clear_revision_create_time<T>(mut self, v: std::option::Option<T>) -> Self
     where
         T: std::convert::Into<wkt::Timestamp>,
@@ -249,6 +319,15 @@ impl Workflow {
     }
 
     /// Sets the value of [labels][crate::model::Workflow::labels].
+    ///
+    /// # Example
+    /// ```
+    /// # use google_cloud_workflows_v1::model::Workflow;
+    /// let x = Workflow::new().set_labels([
+    ///     ("key0", "abc"),
+    ///     ("key1", "xyz"),
+    /// ]);
+    /// ```
     pub fn set_labels<T, K, V>(mut self, v: T) -> Self
     where
         T: std::iter::IntoIterator<Item = (K, V)>,
@@ -261,18 +340,37 @@ impl Workflow {
     }
 
     /// Sets the value of [service_account][crate::model::Workflow::service_account].
+    ///
+    /// # Example
+    /// ```
+    /// # use google_cloud_workflows_v1::model::Workflow;
+    /// let x = Workflow::new().set_service_account("example");
+    /// ```
     pub fn set_service_account<T: std::convert::Into<std::string::String>>(mut self, v: T) -> Self {
         self.service_account = v.into();
         self
     }
 
     /// Sets the value of [crypto_key_name][crate::model::Workflow::crypto_key_name].
+    ///
+    /// # Example
+    /// ```
+    /// # use google_cloud_workflows_v1::model::Workflow;
+    /// let x = Workflow::new().set_crypto_key_name("example");
+    /// ```
     pub fn set_crypto_key_name<T: std::convert::Into<std::string::String>>(mut self, v: T) -> Self {
         self.crypto_key_name = v.into();
         self
     }
 
     /// Sets the value of [state_error][crate::model::Workflow::state_error].
+    ///
+    /// # Example
+    /// ```
+    /// # use google_cloud_workflows_v1::model::Workflow;
+    /// use google_cloud_workflows_v1::model::workflow::StateError;
+    /// let x = Workflow::new().set_state_error(StateError::default()/* use setters */);
+    /// ```
     pub fn set_state_error<T>(mut self, v: T) -> Self
     where
         T: std::convert::Into<crate::model::workflow::StateError>,
@@ -282,6 +380,14 @@ impl Workflow {
     }
 
     /// Sets or clears the value of [state_error][crate::model::Workflow::state_error].
+    ///
+    /// # Example
+    /// ```
+    /// # use google_cloud_workflows_v1::model::Workflow;
+    /// use google_cloud_workflows_v1::model::workflow::StateError;
+    /// let x = Workflow::new().set_or_clear_state_error(Some(StateError::default()/* use setters */));
+    /// let x = Workflow::new().set_or_clear_state_error(None::<StateError>);
+    /// ```
     pub fn set_or_clear_state_error<T>(mut self, v: std::option::Option<T>) -> Self
     where
         T: std::convert::Into<crate::model::workflow::StateError>,
@@ -291,6 +397,13 @@ impl Workflow {
     }
 
     /// Sets the value of [call_log_level][crate::model::Workflow::call_log_level].
+    ///
+    /// # Example
+    /// ```
+    /// # use google_cloud_workflows_v1::model::Workflow;
+    /// use google_cloud_workflows_v1::model::workflow::CallLogLevel;
+    /// let x = Workflow::new().set_call_log_level(CallLogLevel::default());
+    /// ```
     pub fn set_call_log_level<T: std::convert::Into<crate::model::workflow::CallLogLevel>>(
         mut self,
         v: T,
@@ -300,6 +413,15 @@ impl Workflow {
     }
 
     /// Sets the value of [user_env_vars][crate::model::Workflow::user_env_vars].
+    ///
+    /// # Example
+    /// ```
+    /// # use google_cloud_workflows_v1::model::Workflow;
+    /// let x = Workflow::new().set_user_env_vars([
+    ///     ("key0", "abc"),
+    ///     ("key1", "xyz"),
+    /// ]);
+    /// ```
     pub fn set_user_env_vars<T, K, V>(mut self, v: T) -> Self
     where
         T: std::iter::IntoIterator<Item = (K, V)>,
@@ -312,6 +434,13 @@ impl Workflow {
     }
 
     /// Sets the value of [execution_history_level][crate::model::Workflow::execution_history_level].
+    ///
+    /// # Example
+    /// ```
+    /// # use google_cloud_workflows_v1::model::Workflow;
+    /// use google_cloud_workflows_v1::model::ExecutionHistoryLevel;
+    /// let x = Workflow::new().set_execution_history_level(ExecutionHistoryLevel::default());
+    /// ```
     pub fn set_execution_history_level<
         T: std::convert::Into<crate::model::ExecutionHistoryLevel>,
     >(
@@ -323,6 +452,12 @@ impl Workflow {
     }
 
     /// Sets the value of [all_kms_keys][crate::model::Workflow::all_kms_keys].
+    ///
+    /// # Example
+    /// ```
+    /// # use google_cloud_workflows_v1::model::Workflow;
+    /// let x = Workflow::new().set_all_kms_keys(["a", "b", "c"]);
+    /// ```
     pub fn set_all_kms_keys<T, V>(mut self, v: T) -> Self
     where
         T: std::iter::IntoIterator<Item = V>,
@@ -334,6 +469,12 @@ impl Workflow {
     }
 
     /// Sets the value of [all_kms_keys_versions][crate::model::Workflow::all_kms_keys_versions].
+    ///
+    /// # Example
+    /// ```
+    /// # use google_cloud_workflows_v1::model::Workflow;
+    /// let x = Workflow::new().set_all_kms_keys_versions(["a", "b", "c"]);
+    /// ```
     pub fn set_all_kms_keys_versions<T, V>(mut self, v: T) -> Self
     where
         T: std::iter::IntoIterator<Item = V>,
@@ -345,6 +486,12 @@ impl Workflow {
     }
 
     /// Sets the value of [crypto_key_version][crate::model::Workflow::crypto_key_version].
+    ///
+    /// # Example
+    /// ```
+    /// # use google_cloud_workflows_v1::model::Workflow;
+    /// let x = Workflow::new().set_crypto_key_version("example");
+    /// ```
     pub fn set_crypto_key_version<T: std::convert::Into<std::string::String>>(
         mut self,
         v: T,
@@ -354,6 +501,15 @@ impl Workflow {
     }
 
     /// Sets the value of [tags][crate::model::Workflow::tags].
+    ///
+    /// # Example
+    /// ```
+    /// # use google_cloud_workflows_v1::model::Workflow;
+    /// let x = Workflow::new().set_tags([
+    ///     ("key0", "abc"),
+    ///     ("key1", "xyz"),
+    /// ]);
+    /// ```
     pub fn set_tags<T, K, V>(mut self, v: T) -> Self
     where
         T: std::iter::IntoIterator<Item = (K, V)>,
@@ -432,12 +588,25 @@ pub mod workflow {
         }
 
         /// Sets the value of [details][crate::model::workflow::StateError::details].
+        ///
+        /// # Example
+        /// ```
+        /// # use google_cloud_workflows_v1::model::workflow::StateError;
+        /// let x = StateError::new().set_details("example");
+        /// ```
         pub fn set_details<T: std::convert::Into<std::string::String>>(mut self, v: T) -> Self {
             self.details = v.into();
             self
         }
 
         /// Sets the value of [r#type][crate::model::workflow::StateError::type].
+        ///
+        /// # Example
+        /// ```
+        /// # use google_cloud_workflows_v1::model::workflow::StateError;
+        /// use google_cloud_workflows_v1::model::workflow::state_error::Type;
+        /// let x = StateError::new().set_type(Type::default());
+        /// ```
         pub fn set_type<T: std::convert::Into<crate::model::workflow::state_error::Type>>(
             mut self,
             v: T,
@@ -924,30 +1093,60 @@ impl ListWorkflowsRequest {
     }
 
     /// Sets the value of [parent][crate::model::ListWorkflowsRequest::parent].
+    ///
+    /// # Example
+    /// ```
+    /// # use google_cloud_workflows_v1::model::ListWorkflowsRequest;
+    /// let x = ListWorkflowsRequest::new().set_parent("example");
+    /// ```
     pub fn set_parent<T: std::convert::Into<std::string::String>>(mut self, v: T) -> Self {
         self.parent = v.into();
         self
     }
 
     /// Sets the value of [page_size][crate::model::ListWorkflowsRequest::page_size].
+    ///
+    /// # Example
+    /// ```
+    /// # use google_cloud_workflows_v1::model::ListWorkflowsRequest;
+    /// let x = ListWorkflowsRequest::new().set_page_size(42);
+    /// ```
     pub fn set_page_size<T: std::convert::Into<i32>>(mut self, v: T) -> Self {
         self.page_size = v.into();
         self
     }
 
     /// Sets the value of [page_token][crate::model::ListWorkflowsRequest::page_token].
+    ///
+    /// # Example
+    /// ```
+    /// # use google_cloud_workflows_v1::model::ListWorkflowsRequest;
+    /// let x = ListWorkflowsRequest::new().set_page_token("example");
+    /// ```
     pub fn set_page_token<T: std::convert::Into<std::string::String>>(mut self, v: T) -> Self {
         self.page_token = v.into();
         self
     }
 
     /// Sets the value of [filter][crate::model::ListWorkflowsRequest::filter].
+    ///
+    /// # Example
+    /// ```
+    /// # use google_cloud_workflows_v1::model::ListWorkflowsRequest;
+    /// let x = ListWorkflowsRequest::new().set_filter("example");
+    /// ```
     pub fn set_filter<T: std::convert::Into<std::string::String>>(mut self, v: T) -> Self {
         self.filter = v.into();
         self
     }
 
     /// Sets the value of [order_by][crate::model::ListWorkflowsRequest::order_by].
+    ///
+    /// # Example
+    /// ```
+    /// # use google_cloud_workflows_v1::model::ListWorkflowsRequest;
+    /// let x = ListWorkflowsRequest::new().set_order_by("example");
+    /// ```
     pub fn set_order_by<T: std::convert::Into<std::string::String>>(mut self, v: T) -> Self {
         self.order_by = v.into();
         self
@@ -987,6 +1186,17 @@ impl ListWorkflowsResponse {
     }
 
     /// Sets the value of [workflows][crate::model::ListWorkflowsResponse::workflows].
+    ///
+    /// # Example
+    /// ```
+    /// # use google_cloud_workflows_v1::model::ListWorkflowsResponse;
+    /// use google_cloud_workflows_v1::model::Workflow;
+    /// let x = ListWorkflowsResponse::new()
+    ///     .set_workflows([
+    ///         Workflow::default()/* use setters */,
+    ///         Workflow::default()/* use (different) setters */,
+    ///     ]);
+    /// ```
     pub fn set_workflows<T, V>(mut self, v: T) -> Self
     where
         T: std::iter::IntoIterator<Item = V>,
@@ -998,12 +1208,24 @@ impl ListWorkflowsResponse {
     }
 
     /// Sets the value of [next_page_token][crate::model::ListWorkflowsResponse::next_page_token].
+    ///
+    /// # Example
+    /// ```
+    /// # use google_cloud_workflows_v1::model::ListWorkflowsResponse;
+    /// let x = ListWorkflowsResponse::new().set_next_page_token("example");
+    /// ```
     pub fn set_next_page_token<T: std::convert::Into<std::string::String>>(mut self, v: T) -> Self {
         self.next_page_token = v.into();
         self
     }
 
     /// Sets the value of [unreachable][crate::model::ListWorkflowsResponse::unreachable].
+    ///
+    /// # Example
+    /// ```
+    /// # use google_cloud_workflows_v1::model::ListWorkflowsResponse;
+    /// let x = ListWorkflowsResponse::new().set_unreachable(["a", "b", "c"]);
+    /// ```
     pub fn set_unreachable<T, V>(mut self, v: T) -> Self
     where
         T: std::iter::IntoIterator<Item = V>,
@@ -1062,12 +1284,24 @@ impl GetWorkflowRequest {
     }
 
     /// Sets the value of [name][crate::model::GetWorkflowRequest::name].
+    ///
+    /// # Example
+    /// ```
+    /// # use google_cloud_workflows_v1::model::GetWorkflowRequest;
+    /// let x = GetWorkflowRequest::new().set_name("example");
+    /// ```
     pub fn set_name<T: std::convert::Into<std::string::String>>(mut self, v: T) -> Self {
         self.name = v.into();
         self
     }
 
     /// Sets the value of [revision_id][crate::model::GetWorkflowRequest::revision_id].
+    ///
+    /// # Example
+    /// ```
+    /// # use google_cloud_workflows_v1::model::GetWorkflowRequest;
+    /// let x = GetWorkflowRequest::new().set_revision_id("example");
+    /// ```
     pub fn set_revision_id<T: std::convert::Into<std::string::String>>(mut self, v: T) -> Self {
         self.revision_id = v.into();
         self
@@ -1114,12 +1348,25 @@ impl CreateWorkflowRequest {
     }
 
     /// Sets the value of [parent][crate::model::CreateWorkflowRequest::parent].
+    ///
+    /// # Example
+    /// ```
+    /// # use google_cloud_workflows_v1::model::CreateWorkflowRequest;
+    /// let x = CreateWorkflowRequest::new().set_parent("example");
+    /// ```
     pub fn set_parent<T: std::convert::Into<std::string::String>>(mut self, v: T) -> Self {
         self.parent = v.into();
         self
     }
 
     /// Sets the value of [workflow][crate::model::CreateWorkflowRequest::workflow].
+    ///
+    /// # Example
+    /// ```
+    /// # use google_cloud_workflows_v1::model::CreateWorkflowRequest;
+    /// use google_cloud_workflows_v1::model::Workflow;
+    /// let x = CreateWorkflowRequest::new().set_workflow(Workflow::default()/* use setters */);
+    /// ```
     pub fn set_workflow<T>(mut self, v: T) -> Self
     where
         T: std::convert::Into<crate::model::Workflow>,
@@ -1129,6 +1376,14 @@ impl CreateWorkflowRequest {
     }
 
     /// Sets or clears the value of [workflow][crate::model::CreateWorkflowRequest::workflow].
+    ///
+    /// # Example
+    /// ```
+    /// # use google_cloud_workflows_v1::model::CreateWorkflowRequest;
+    /// use google_cloud_workflows_v1::model::Workflow;
+    /// let x = CreateWorkflowRequest::new().set_or_clear_workflow(Some(Workflow::default()/* use setters */));
+    /// let x = CreateWorkflowRequest::new().set_or_clear_workflow(None::<Workflow>);
+    /// ```
     pub fn set_or_clear_workflow<T>(mut self, v: std::option::Option<T>) -> Self
     where
         T: std::convert::Into<crate::model::Workflow>,
@@ -1138,6 +1393,12 @@ impl CreateWorkflowRequest {
     }
 
     /// Sets the value of [workflow_id][crate::model::CreateWorkflowRequest::workflow_id].
+    ///
+    /// # Example
+    /// ```
+    /// # use google_cloud_workflows_v1::model::CreateWorkflowRequest;
+    /// let x = CreateWorkflowRequest::new().set_workflow_id("example");
+    /// ```
     pub fn set_workflow_id<T: std::convert::Into<std::string::String>>(mut self, v: T) -> Self {
         self.workflow_id = v.into();
         self
@@ -1171,6 +1432,12 @@ impl DeleteWorkflowRequest {
     }
 
     /// Sets the value of [name][crate::model::DeleteWorkflowRequest::name].
+    ///
+    /// # Example
+    /// ```
+    /// # use google_cloud_workflows_v1::model::DeleteWorkflowRequest;
+    /// let x = DeleteWorkflowRequest::new().set_name("example");
+    /// ```
     pub fn set_name<T: std::convert::Into<std::string::String>>(mut self, v: T) -> Self {
         self.name = v.into();
         self
@@ -1207,6 +1474,13 @@ impl UpdateWorkflowRequest {
     }
 
     /// Sets the value of [workflow][crate::model::UpdateWorkflowRequest::workflow].
+    ///
+    /// # Example
+    /// ```
+    /// # use google_cloud_workflows_v1::model::UpdateWorkflowRequest;
+    /// use google_cloud_workflows_v1::model::Workflow;
+    /// let x = UpdateWorkflowRequest::new().set_workflow(Workflow::default()/* use setters */);
+    /// ```
     pub fn set_workflow<T>(mut self, v: T) -> Self
     where
         T: std::convert::Into<crate::model::Workflow>,
@@ -1216,6 +1490,14 @@ impl UpdateWorkflowRequest {
     }
 
     /// Sets or clears the value of [workflow][crate::model::UpdateWorkflowRequest::workflow].
+    ///
+    /// # Example
+    /// ```
+    /// # use google_cloud_workflows_v1::model::UpdateWorkflowRequest;
+    /// use google_cloud_workflows_v1::model::Workflow;
+    /// let x = UpdateWorkflowRequest::new().set_or_clear_workflow(Some(Workflow::default()/* use setters */));
+    /// let x = UpdateWorkflowRequest::new().set_or_clear_workflow(None::<Workflow>);
+    /// ```
     pub fn set_or_clear_workflow<T>(mut self, v: std::option::Option<T>) -> Self
     where
         T: std::convert::Into<crate::model::Workflow>,
@@ -1225,6 +1507,13 @@ impl UpdateWorkflowRequest {
     }
 
     /// Sets the value of [update_mask][crate::model::UpdateWorkflowRequest::update_mask].
+    ///
+    /// # Example
+    /// ```
+    /// # use google_cloud_workflows_v1::model::UpdateWorkflowRequest;
+    /// use wkt::FieldMask;
+    /// let x = UpdateWorkflowRequest::new().set_update_mask(FieldMask::default()/* use setters */);
+    /// ```
     pub fn set_update_mask<T>(mut self, v: T) -> Self
     where
         T: std::convert::Into<wkt::FieldMask>,
@@ -1234,6 +1523,14 @@ impl UpdateWorkflowRequest {
     }
 
     /// Sets or clears the value of [update_mask][crate::model::UpdateWorkflowRequest::update_mask].
+    ///
+    /// # Example
+    /// ```
+    /// # use google_cloud_workflows_v1::model::UpdateWorkflowRequest;
+    /// use wkt::FieldMask;
+    /// let x = UpdateWorkflowRequest::new().set_or_clear_update_mask(Some(FieldMask::default()/* use setters */));
+    /// let x = UpdateWorkflowRequest::new().set_or_clear_update_mask(None::<FieldMask>);
+    /// ```
     pub fn set_or_clear_update_mask<T>(mut self, v: std::option::Option<T>) -> Self
     where
         T: std::convert::Into<wkt::FieldMask>,
@@ -1277,6 +1574,13 @@ impl OperationMetadata {
     }
 
     /// Sets the value of [create_time][crate::model::OperationMetadata::create_time].
+    ///
+    /// # Example
+    /// ```
+    /// # use google_cloud_workflows_v1::model::OperationMetadata;
+    /// use wkt::Timestamp;
+    /// let x = OperationMetadata::new().set_create_time(Timestamp::default()/* use setters */);
+    /// ```
     pub fn set_create_time<T>(mut self, v: T) -> Self
     where
         T: std::convert::Into<wkt::Timestamp>,
@@ -1286,6 +1590,14 @@ impl OperationMetadata {
     }
 
     /// Sets or clears the value of [create_time][crate::model::OperationMetadata::create_time].
+    ///
+    /// # Example
+    /// ```
+    /// # use google_cloud_workflows_v1::model::OperationMetadata;
+    /// use wkt::Timestamp;
+    /// let x = OperationMetadata::new().set_or_clear_create_time(Some(Timestamp::default()/* use setters */));
+    /// let x = OperationMetadata::new().set_or_clear_create_time(None::<Timestamp>);
+    /// ```
     pub fn set_or_clear_create_time<T>(mut self, v: std::option::Option<T>) -> Self
     where
         T: std::convert::Into<wkt::Timestamp>,
@@ -1295,6 +1607,13 @@ impl OperationMetadata {
     }
 
     /// Sets the value of [end_time][crate::model::OperationMetadata::end_time].
+    ///
+    /// # Example
+    /// ```
+    /// # use google_cloud_workflows_v1::model::OperationMetadata;
+    /// use wkt::Timestamp;
+    /// let x = OperationMetadata::new().set_end_time(Timestamp::default()/* use setters */);
+    /// ```
     pub fn set_end_time<T>(mut self, v: T) -> Self
     where
         T: std::convert::Into<wkt::Timestamp>,
@@ -1304,6 +1623,14 @@ impl OperationMetadata {
     }
 
     /// Sets or clears the value of [end_time][crate::model::OperationMetadata::end_time].
+    ///
+    /// # Example
+    /// ```
+    /// # use google_cloud_workflows_v1::model::OperationMetadata;
+    /// use wkt::Timestamp;
+    /// let x = OperationMetadata::new().set_or_clear_end_time(Some(Timestamp::default()/* use setters */));
+    /// let x = OperationMetadata::new().set_or_clear_end_time(None::<Timestamp>);
+    /// ```
     pub fn set_or_clear_end_time<T>(mut self, v: std::option::Option<T>) -> Self
     where
         T: std::convert::Into<wkt::Timestamp>,
@@ -1313,18 +1640,36 @@ impl OperationMetadata {
     }
 
     /// Sets the value of [target][crate::model::OperationMetadata::target].
+    ///
+    /// # Example
+    /// ```
+    /// # use google_cloud_workflows_v1::model::OperationMetadata;
+    /// let x = OperationMetadata::new().set_target("example");
+    /// ```
     pub fn set_target<T: std::convert::Into<std::string::String>>(mut self, v: T) -> Self {
         self.target = v.into();
         self
     }
 
     /// Sets the value of [verb][crate::model::OperationMetadata::verb].
+    ///
+    /// # Example
+    /// ```
+    /// # use google_cloud_workflows_v1::model::OperationMetadata;
+    /// let x = OperationMetadata::new().set_verb("example");
+    /// ```
     pub fn set_verb<T: std::convert::Into<std::string::String>>(mut self, v: T) -> Self {
         self.verb = v.into();
         self
     }
 
     /// Sets the value of [api_version][crate::model::OperationMetadata::api_version].
+    ///
+    /// # Example
+    /// ```
+    /// # use google_cloud_workflows_v1::model::OperationMetadata;
+    /// let x = OperationMetadata::new().set_api_version("example");
+    /// ```
     pub fn set_api_version<T: std::convert::Into<std::string::String>>(mut self, v: T) -> Self {
         self.api_version = v.into();
         self
@@ -1367,18 +1712,36 @@ impl ListWorkflowRevisionsRequest {
     }
 
     /// Sets the value of [name][crate::model::ListWorkflowRevisionsRequest::name].
+    ///
+    /// # Example
+    /// ```
+    /// # use google_cloud_workflows_v1::model::ListWorkflowRevisionsRequest;
+    /// let x = ListWorkflowRevisionsRequest::new().set_name("example");
+    /// ```
     pub fn set_name<T: std::convert::Into<std::string::String>>(mut self, v: T) -> Self {
         self.name = v.into();
         self
     }
 
     /// Sets the value of [page_size][crate::model::ListWorkflowRevisionsRequest::page_size].
+    ///
+    /// # Example
+    /// ```
+    /// # use google_cloud_workflows_v1::model::ListWorkflowRevisionsRequest;
+    /// let x = ListWorkflowRevisionsRequest::new().set_page_size(42);
+    /// ```
     pub fn set_page_size<T: std::convert::Into<i32>>(mut self, v: T) -> Self {
         self.page_size = v.into();
         self
     }
 
     /// Sets the value of [page_token][crate::model::ListWorkflowRevisionsRequest::page_token].
+    ///
+    /// # Example
+    /// ```
+    /// # use google_cloud_workflows_v1::model::ListWorkflowRevisionsRequest;
+    /// let x = ListWorkflowRevisionsRequest::new().set_page_token("example");
+    /// ```
     pub fn set_page_token<T: std::convert::Into<std::string::String>>(mut self, v: T) -> Self {
         self.page_token = v.into();
         self
@@ -1415,6 +1778,17 @@ impl ListWorkflowRevisionsResponse {
     }
 
     /// Sets the value of [workflows][crate::model::ListWorkflowRevisionsResponse::workflows].
+    ///
+    /// # Example
+    /// ```
+    /// # use google_cloud_workflows_v1::model::ListWorkflowRevisionsResponse;
+    /// use google_cloud_workflows_v1::model::Workflow;
+    /// let x = ListWorkflowRevisionsResponse::new()
+    ///     .set_workflows([
+    ///         Workflow::default()/* use setters */,
+    ///         Workflow::default()/* use (different) setters */,
+    ///     ]);
+    /// ```
     pub fn set_workflows<T, V>(mut self, v: T) -> Self
     where
         T: std::iter::IntoIterator<Item = V>,
@@ -1426,6 +1800,12 @@ impl ListWorkflowRevisionsResponse {
     }
 
     /// Sets the value of [next_page_token][crate::model::ListWorkflowRevisionsResponse::next_page_token].
+    ///
+    /// # Example
+    /// ```
+    /// # use google_cloud_workflows_v1::model::ListWorkflowRevisionsResponse;
+    /// let x = ListWorkflowRevisionsResponse::new().set_next_page_token("example");
+    /// ```
     pub fn set_next_page_token<T: std::convert::Into<std::string::String>>(mut self, v: T) -> Self {
         self.next_page_token = v.into();
         self

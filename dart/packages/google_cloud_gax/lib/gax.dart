@@ -67,12 +67,7 @@ class ServiceClient {
   ServiceClient({required this.client});
 
   Future<Map<String, dynamic>> get(Uri url) async {
-    final response = await client.get(
-      url,
-      headers: {
-        _clientKey: _clientName,
-      },
-    );
+    final response = await client.get(url, headers: {_clientKey: _clientName});
     return _processResponse(response);
   }
 
@@ -86,6 +81,42 @@ class ServiceClient {
       },
     );
     return _processResponse(response);
+  }
+
+  Stream<Map<String, dynamic>> postStreaming<T>(
+    Uri url, {
+    JsonEncodable? body,
+  }) async* {
+    final request = http.Request('POST', _makeUrlStreaming(url));
+    if (body != null) {
+      request.body = body._asEncodedJson;
+    }
+    request.headers.addAll({
+      _clientKey: _clientName,
+      if (body != null) _contentTypeKey: _typeJson,
+    });
+
+    final response = await client.send(request);
+
+    if (response.statusCode != 200) {
+      throw Exception('bad stuff');
+    }
+
+    final lines = response.stream.toStringStream().transform(LineSplitter());
+    await for (final line in lines) {
+      const dataPrefix = 'data: ';
+      if (line.startsWith(dataPrefix)) {
+        final jsonText = line.substring(dataPrefix.length);
+        final json = jsonDecode(jsonText) as Map<String, dynamic>;
+        yield json;
+      }
+    }
+  }
+
+  static Uri _makeUrlStreaming(Uri url) {
+    final query = Map.of(url.queryParameters);
+    query['alt'] = 'sse';
+    return url.replace(queryParameters: query);
   }
 
   Future<Map<String, dynamic>> put(Uri url, {JsonEncodable? body}) async {
@@ -115,9 +146,7 @@ class ServiceClient {
   Future<Map<String, dynamic>> delete(Uri url) async {
     final response = await client.delete(
       url,
-      headers: {
-        _clientKey: _clientName,
-      },
+      headers: {_clientKey: _clientName},
     );
     return _processResponse(response);
   }
@@ -142,7 +171,8 @@ class ServiceClient {
     } catch (_) {
       // Return a general HTTP exception if we can't parse the Status response.
       throw http.ClientException(
-          '${response.statusCode}: ${response.reasonPhrase}');
+        '${response.statusCode}: ${response.reasonPhrase}',
+      );
     }
 
     throw status;

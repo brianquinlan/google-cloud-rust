@@ -18,8 +18,7 @@ options:
   logging: CLOUD_LOGGING_ONLY
   env:
     - GOOGLE_CLOUD_PROJECT=${PROJECT_ID}
-    - GOOGLE_CLOUD_RUST_TEST_SERVICE_ACCOUNT=set-iam-test-only@${PROJECT_ID}.iam.gserviceaccount.com
-    - GOOGLE_CLOUD_RUST_TEST_WORKFLOWS_RUNNER=test-workflow-runner@${PROJECT_ID}.iam.gserviceaccount.com
+    - GOOGLE_CLOUD_RUST_TEST_SERVICE_ACCOUNT=rust-sdk-test@${PROJECT_ID}.iam.gserviceaccount.com
     - GOOGLE_CLOUD_RUST_TEST_STORAGE_KMS_RING=us-central1
     - SCCACHE_GCS_BUCKET=${PROJECT_ID}-build-cache
     - SCCACHE_GCS_RW_MODE=READ_WRITE
@@ -35,7 +34,7 @@ steps:
       curl -fsSL https://github.com/mozilla/sccache/releases/download/v0.9.1/sccache-v0.9.1-x86_64-unknown-linux-musl.tar.gz |
         tar -C /workspace/.bin -zxf - --strip-components=1
       chmod 755 /workspace/.bin/sccache
-  - name: 'rust:1.85-bookworm'
+  - name: 'rust:1.90-bookworm'
     script: |
       #!/usr/bin/env bash
       set -e

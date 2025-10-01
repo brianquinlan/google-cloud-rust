@@ -16,7 +16,9 @@ use anyhow::Error;
 use rand::{Rng, distr::Alphanumeric};
 
 pub type Result<T> = anyhow::Result<T>;
+pub mod aiplatform;
 pub mod bigquery;
+pub mod compute;
 pub mod error_details;
 pub mod firestore;
 pub mod pubsub;
@@ -39,8 +41,8 @@ pub fn project_id() -> Result<String> {
     Ok(project_id)
 }
 
-/// Returns an existing, but disabled service account to test IAM RPCs.
-pub fn service_account_for_iam_tests() -> Result<String> {
+/// Returns an existing, but disabled service account.
+pub fn test_service_account() -> Result<String> {
     let value = std::env::var("GOOGLE_CLOUD_RUST_TEST_SERVICE_ACCOUNT")?;
     Ok(value)
 }
@@ -50,12 +52,6 @@ pub fn region_id() -> String {
     std::env::var("GOOGLE_CLOUD_RUST_TEST_REGION")
         .ok()
         .unwrap_or("us-central1".to_string())
-}
-
-/// Returns the preferred service account for the test workflows.
-pub fn workflows_runner() -> Result<String> {
-    let value = std::env::var("GOOGLE_CLOUD_RUST_TEST_WORKFLOWS_RUNNER")?;
-    Ok(value)
 }
 
 pub fn report_error(e: anyhow::Error) -> anyhow::Error {
@@ -74,4 +70,18 @@ pub(crate) fn random_workflow_id() -> String {
         .map(char::from)
         .collect();
     format!("{PREFIX}{workflow_id}")
+}
+
+pub fn enable_tracing() -> tracing::subscriber::DefaultGuard {
+    use tracing_subscriber::fmt::format::FmtSpan;
+    let builder = tracing_subscriber::fmt()
+        .with_level(true)
+        .with_thread_ids(true)
+        .with_span_events(FmtSpan::NEW | FmtSpan::CLOSE)
+        .with_max_level(tracing::Level::WARN);
+    #[cfg(feature = "log-integration-tests")]
+    let builder = builder.with_max_level(tracing::Level::INFO);
+    let subscriber = builder.finish();
+
+    tracing::subscriber::set_default(subscriber)
 }

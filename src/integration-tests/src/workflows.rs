@@ -20,23 +20,9 @@ use lro::Poller;
 use std::time::Duration;
 
 pub async fn until_done() -> Result<()> {
-    // Enable a basic subscriber. Useful to troubleshoot problems and visually
-    // verify tracing is doing something.
-    #[cfg(feature = "log-integration-tests")]
-    let _guard = {
-        use tracing_subscriber::fmt::format::FmtSpan;
-        let subscriber = tracing_subscriber::fmt()
-            .with_level(true)
-            .with_thread_ids(true)
-            .with_span_events(FmtSpan::NEW | FmtSpan::CLOSE)
-            .finish();
-
-        tracing::subscriber::set_default(subscriber)
-    };
-
     let project_id = crate::project_id()?;
     let location_id = crate::region_id();
-    let workflows_runner = crate::workflows_runner()?;
+    let workflows_runner = crate::test_service_account()?;
 
     let client = wf::client::Workflows::builder()
         .with_tracing()
@@ -85,23 +71,9 @@ main:
 }
 
 pub async fn explicit_loop() -> Result<()> {
-    // Enable a basic subscriber. Useful to troubleshoot problems and visually
-    // verify tracing is doing something.
-    #[cfg(feature = "log-integration-tests")]
-    let _guard = {
-        use tracing_subscriber::fmt::format::FmtSpan;
-        let subscriber = tracing_subscriber::fmt()
-            .with_level(true)
-            .with_thread_ids(true)
-            .with_span_events(FmtSpan::NEW | FmtSpan::CLOSE)
-            .finish();
-
-        tracing::subscriber::set_default(subscriber)
-    };
-
     let project_id = crate::project_id()?;
     let location_id = crate::region_id();
-    let workflows_runner = crate::workflows_runner()?;
+    let workflows_runner = crate::test_service_account()?;
 
     let client = wf::client::Workflows::builder()
         .with_tracing()
