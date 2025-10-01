@@ -83,10 +83,14 @@ class ServiceClient {
     return _processResponse(response);
   }
 
-  Stream<Map<String, dynamic>> postStreaming<T>(
+  Stream<Map<String, dynamic>> postStreaming(
     Uri url, {
     JsonEncodable? body,
   }) async* {
+    // Some Google APIs can generate Server-sent events (SSE) when an `alt=see`
+    // parameter is added.
+    //
+    // See https://html.spec.whatwg.org/multipage/server-sent-events.html
     final request = http.Request('POST', _makeUrlStreaming(url));
     if (body != null) {
       request.body = body._asEncodedJson;
@@ -98,12 +102,20 @@ class ServiceClient {
 
     final response = await client.send(request);
 
-    if (response.statusCode != 200) {
-      throw Exception('bad stuff');
+    final statusOK = response.statusCode >= 200 && response.statusCode < 300;
+    if (!statusOK) {
+      _throwException(
+        response.statusCode,
+        response.reasonPhrase,
+        await response.stream.bytesToString(),
+      );
     }
 
     final lines = response.stream.toStringStream().transform(LineSplitter());
     await for (final line in lines) {
+      // Google API only generate "data" events.
+      // The SSE specification does not require a space after the colon but
+      // Google APIs always generate one.
       const dataPrefix = 'data: ';
       if (line.startsWith(dataPrefix)) {
         final jsonText = line.substring(dataPrefix.length);
@@ -162,17 +174,22 @@ class ServiceClient {
       final body = response.body;
       return body.isEmpty ? {} : jsonDecode(body);
     }
+    _throwException(response.statusCode, response.reasonPhrase, response.body);
+  }
 
+  Never _throwException(
+    int statusCode,
+    String? reasonPhrase,
+    String responseBody,
+  ) {
     Status status;
 
     try {
-      final json = jsonDecode(response.body);
+      final json = jsonDecode(responseBody);
       status = Status.fromJson(json['error']);
     } catch (_) {
       // Return a general HTTP exception if we can't parse the Status response.
-      throw http.ClientException(
-        '${response.statusCode}: ${response.reasonPhrase}',
-      );
+      throw http.ClientException('$statusCode: $reasonPhrase');
     }
 
     throw status;

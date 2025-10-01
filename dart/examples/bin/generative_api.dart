@@ -50,6 +50,10 @@ void main(List<String> args) async {
     ],
   );
 
+  await for (final s in service.streamGenerateContent(request)) {
+    print('output: ${s.candidates?[0].content?.parts?[0].text}');
+  }
+
   try {
     final result = await service.generateContent(request);
     final textResponse = result.candidates?[0].content?.parts?[0].text;

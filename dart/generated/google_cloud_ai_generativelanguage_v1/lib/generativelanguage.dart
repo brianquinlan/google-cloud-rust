@@ -57,6 +57,15 @@ final class GenerativeService {
     return GenerateContentResponse.fromJson(response);
   }
 
+  Stream<GenerateContentResponse> streamGenerateContent(
+    GenerateContentRequest request,
+  ) async* {
+    final url = Uri.https(_host, 'v1/${request.model}:streamGenerateContent');
+    await for (final json in _client.postStreaming(url, body: request)) {
+      yield GenerateContentResponse.fromJson(json);
+    }
+  }
+
   /// Generates a text embedding vector from the input `Content` using the
   /// specified [Gemini Embedding
   /// model](https://ai.google.dev/gemini-api/docs/models/gemini#text-embedding).
