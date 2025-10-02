@@ -57,13 +57,16 @@ final class GenerativeService {
     return GenerateContentResponse.fromJson(response);
   }
 
+  /// Generates a [streamed
+  /// response](https://ai.google.dev/gemini-api/docs/text-generation?lang=python#generate-a-text-stream)
+  /// from the model given an input `GenerateContentRequest`.
   Stream<GenerateContentResponse> streamGenerateContent(
     GenerateContentRequest request,
-  ) async* {
-    final url = Uri.https(_host, 'v1/${request.model}:streamGenerateContent');
-    await for (final json in _client.postStreaming(url, body: request)) {
-      yield GenerateContentResponse.fromJson(json);
-    }
+  ) {
+    final url = Uri.https(_host, '/v1/${request.model}:streamGenerateContent');
+    return _client
+        .postStreaming(url, body: request)
+        .map(GenerateContentResponse.fromJson);
   }
 
   /// Generates a text embedding vector from the input `Content` using the
