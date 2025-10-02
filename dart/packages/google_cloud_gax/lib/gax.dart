@@ -61,6 +61,28 @@ abstract class ProtoEnum implements JsonEncodable {
   int get hashCode => value.hashCode;
 }
 
+/// Exception thrown when a service method returns an error.
+///
+/// You can find out more about this error model and how to work with it in the
+/// [API Design Guide](https://cloud.google.com/apis/design/errors).
+class ServiceException implements Exception {
+  final String message;
+
+  /// The status message returned by the server.
+  ///
+  /// If `status` is `null` then the server returned an invalid response.
+  final Status? status;
+
+  ServiceException(this.message, {this.status});
+
+  @override
+  String toString() => 'ServiceException: $message';
+
+  factory ServiceException.fromStatus(Status status) {
+    return ServiceException(status.message ?? 'unknown error', status: status);
+  }
+}
+
 class ServiceClient {
   final http.Client client;
 
@@ -175,17 +197,22 @@ class ServiceClient {
     String? reasonPhrase,
     String responseBody,
   ) {
-    Status status;
-
+    final dynamic json;
     try {
-      final json = jsonDecode(responseBody);
-      status = Status.fromJson(json['error']);
-    } catch (_) {
+      json = jsonDecode(responseBody);
+    } on FormatException {
       // Return a general HTTP exception if we can't parse the Status response.
-      throw http.ClientException('$statusCode: $reasonPhrase');
+      throw ServiceException('invalid JSON response from server');
     }
 
-    throw status;
+    final Status status;
+    try {
+      status = Status.fromJson(json['error']);
+    } on TypeError {
+      throw ServiceException('unexpected response format from server');
+    }
+
+    throw ServiceException.fromStatus(status);
   }
 }
 
