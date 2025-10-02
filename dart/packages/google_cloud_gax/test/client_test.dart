@@ -52,8 +52,8 @@ void main() {
     expect(request!.headers.keys, contains('x-goog-api-client'));
   });
 
-  group('postStreaming', () {
-    test('validate request', () async {
+  group('streaming', () {
+    group('requests without body', () {
       late Request actualRequest;
       final service = ServiceClient(
         client: MockClient((request) async {
@@ -62,16 +62,52 @@ void main() {
         }),
       );
 
-      await service.postStreaming(sampleUrl, body: samplePayload).drain();
+      for (final (method, fn) in [
+        ('DELETE', () => service.deleteStreaming(sampleUrl)),
+        ('GET', () => service.getStreaming(sampleUrl)),
+        ('PATCH', () => service.patchStreaming(sampleUrl)),
+        ('POST', () => service.postStreaming(sampleUrl)),
+        ('PUT', () => service.putStreaming(sampleUrl)),
+      ]) {
+        test(method, () async {
+          await fn().drain();
 
-      expect(actualRequest.method, 'POST');
-      expect(actualRequest.body, jsonEncode(samplePayload.toJson()));
-      expect(actualRequest.headers.keys, contains('x-goog-api-client'));
-      expect(
-        actualRequest.headers,
-        containsPair('content-type', 'application/json'),
+          expect(actualRequest.method, method);
+          expect(actualRequest.body, isEmpty);
+          expect(actualRequest.headers.keys, contains('x-goog-api-client'));
+          expect(actualRequest.headers, isNot(contains('content-type')));
+          expect(actualRequest.url.queryParameters['alt'], 'sse');
+        });
+      }
+    });
+
+    group('requests with body', () {
+      late Request actualRequest;
+      final service = ServiceClient(
+        client: MockClient((request) async {
+          actualRequest = request;
+          return Response('', 200);
+        }),
       );
-      expect(actualRequest.url.queryParameters['alt'], 'sse');
+
+      for (final (method, fn) in [
+        ('PATCH', () => service.patchStreaming(sampleUrl, body: samplePayload)),
+        ('POST', () => service.postStreaming(sampleUrl, body: samplePayload)),
+        ('PUT', () => service.putStreaming(sampleUrl, body: samplePayload)),
+      ]) {
+        test(method, () async {
+          await fn().drain();
+
+          expect(actualRequest.method, method);
+          expect(actualRequest.body, jsonEncode(samplePayload.toJson()));
+          expect(actualRequest.headers.keys, contains('x-goog-api-client'));
+          expect(
+            actualRequest.headers,
+            containsPair('content-type', 'application/json'),
+          );
+          expect(actualRequest.url.queryParameters['alt'], 'sse');
+        });
+      }
     });
 
     test('500 response, no status, no response body', () async {
