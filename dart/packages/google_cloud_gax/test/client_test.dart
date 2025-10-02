@@ -20,39 +20,19 @@ import 'package:http/http.dart';
 import 'package:http/testing.dart';
 import 'package:test/test.dart';
 
+class TestMessage extends JsonEncodable {
+  final String message;
+  TestMessage(this.message);
+  @override
+  Object? toJson() {
+    return message;
+  }
+}
+
 final sampleUrl = Uri.https('example.org', '/path');
-final samplePayload = Status(code: 200, message: 'OK');
 
 void main() {
-  Client? httpClient;
-  Request? request;
-
-  setUp(() {
-    httpClient = MockClient((Request r) {
-      request = r;
-      return Future.value(Response('', 200));
-    });
-  });
-
-  test('get', () async {
-    final service = ServiceClient(client: httpClient!);
-
-    await service.get(sampleUrl);
-
-    expect(request!.method, 'GET');
-    expect(request!.headers.keys, contains('x-goog-api-client'));
-  });
-
-  test('post', () async {
-    final service = ServiceClient(client: httpClient!);
-
-    await service.post(sampleUrl, body: samplePayload);
-
-    expect(request!.method, 'POST');
-    expect(request!.headers.keys, contains('x-goog-api-client'));
-  });
-
-  group('streaming', () {
+  group('non-streaming', () {
     group('requests without body', () {
       late Request actualRequest;
       final service = ServiceClient(
@@ -63,20 +43,19 @@ void main() {
       );
 
       for (final (method, fn) in [
-        ('DELETE', () => service.deleteStreaming(sampleUrl)),
-        ('GET', () => service.getStreaming(sampleUrl)),
-        ('PATCH', () => service.patchStreaming(sampleUrl)),
-        ('POST', () => service.postStreaming(sampleUrl)),
-        ('PUT', () => service.putStreaming(sampleUrl)),
+        ('DELETE', service.delete),
+        ('GET', service.get),
+        ('PATCH', service.patch),
+        ('POST', service.post),
+        ('PUT', service.put),
       ]) {
         test(method, () async {
-          await fn().drain();
+          await fn(sampleUrl);
 
           expect(actualRequest.method, method);
+          expect(actualRequest.url, sampleUrl);
+          expect(actualRequest.headers, {'x-goog-api-client': anything});
           expect(actualRequest.body, isEmpty);
-          expect(actualRequest.headers.keys, contains('x-goog-api-client'));
-          expect(actualRequest.headers, isNot(contains('content-type')));
-          expect(actualRequest.url.queryParameters['alt'], 'sse');
         });
       }
     });
@@ -91,21 +70,20 @@ void main() {
       );
 
       for (final (method, fn) in [
-        ('PATCH', () => service.patchStreaming(sampleUrl, body: samplePayload)),
-        ('POST', () => service.postStreaming(sampleUrl, body: samplePayload)),
-        ('PUT', () => service.putStreaming(sampleUrl, body: samplePayload)),
+        ('PATCH', service.patch),
+        ('POST', service.post),
+        ('PUT', service.put),
       ]) {
         test(method, () async {
-          await fn().drain();
+          await fn(sampleUrl, body: TestMessage('<test payload>'));
 
           expect(actualRequest.method, method);
-          expect(actualRequest.body, jsonEncode(samplePayload.toJson()));
-          expect(actualRequest.headers.keys, contains('x-goog-api-client'));
-          expect(
-            actualRequest.headers,
-            containsPair('content-type', 'application/json'),
-          );
-          expect(actualRequest.url.queryParameters['alt'], 'sse');
+          expect(actualRequest.url, sampleUrl);
+          expect(actualRequest.headers, {
+            'content-type': 'application/json',
+            'x-goog-api-client': anything,
+          });
+          expect(actualRequest.body, '"<test payload>"');
         });
       }
     });
@@ -118,7 +96,7 @@ void main() {
       );
 
       await expectLater(
-        () => service.post(sampleUrl, body: samplePayload),
+        () => service.post(sampleUrl),
         throwsA(isA<ClientException>()),
       );
     });
@@ -133,13 +111,119 @@ void main() {
       );
 
       await expectLater(
-        () => service.post(sampleUrl, body: samplePayload),
+        () => service.post(sampleUrl),
         throwsA(
           isA<Status>()
               .having((e) => e.code, 'code', 1)
               .having((e) => e.message, 'message', 'failure')
               .having((e) => e.details, 'details', []),
         ),
+      );
+    });
+
+    test('200 response, json response', () async {
+      final service = ServiceClient(
+        client: MockClient((request) async {
+          return Response('{"fruit":"apple"}', 200);
+        }),
+      );
+
+      expect(await service.post(sampleUrl), {"fruit": "apple"});
+    });
+  });
+
+  group('streaming', () {
+    group('requests without body', () {
+      late Request actualRequest;
+      final service = ServiceClient(
+        client: MockClient((request) async {
+          actualRequest = request;
+          return Response('', 200);
+        }),
+      );
+
+      for (final (method, fn) in [
+        ('DELETE', service.deleteStreaming),
+        ('GET', service.getStreaming),
+        ('PATCH', service.patchStreaming),
+        ('POST', service.postStreaming),
+        ('PUT', service.putStreaming),
+      ]) {
+        test(method, () async {
+          await fn(Uri.parse('http://example.com/')).drain();
+
+          expect(actualRequest.method, method);
+          expect(actualRequest.url, Uri.parse('http://example.com/?alt=sse'));
+          expect(actualRequest.headers, {'x-goog-api-client': anything});
+          expect(actualRequest.body, isEmpty);
+        });
+      }
+    });
+
+    group('requests with body', () {
+      late Request actualRequest;
+      final service = ServiceClient(
+        client: MockClient((request) async {
+          actualRequest = request;
+          return Response('', 200);
+        }),
+      );
+
+      for (final (method, fn) in [
+        ('PATCH', service.patchStreaming),
+        ('POST', service.postStreaming),
+        ('PUT', service.putStreaming),
+      ]) {
+        test(method, () async {
+          await fn(
+            Uri.parse('http://example.com/'),
+            body: TestMessage('<test payload>'),
+          ).drain();
+
+          expect(actualRequest.method, method);
+          expect(actualRequest.url, Uri.parse('http://example.com/?alt=sse'));
+          expect(actualRequest.headers, {
+            'content-type': 'application/json',
+            'x-goog-api-client': anything,
+          });
+          expect(actualRequest.body, '"<test payload>"');
+        });
+      }
+    });
+
+    test('500 response, no status, no response body', () async {
+      final service = ServiceClient(
+        client: MockClient((request) async {
+          return Response('', 500);
+        }),
+      );
+
+      expect(
+        service.postStreaming(sampleUrl),
+        emitsError(isA<ClientException>()),
+      );
+    });
+
+    test('400 response, status body', () async {
+      final status = Status(code: 1, message: "failure", details: []);
+      final statusJson = jsonEncode(status.toJson());
+      final service = ServiceClient(
+        client: MockClient((request) async {
+          return Response('{"error":$statusJson}', 400);
+        }),
+      );
+
+      expect(
+        service.postStreaming(sampleUrl),
+        emitsInOrder([
+          emitsError(
+            isA<Status>()
+                .having((e) => e.code, 'code', 1)
+                .having((e) => e.message, 'message', 'failure')
+                .having((e) => e.details, 'details', []),
+          ),
+          emitsDone,
+        ]),
       );
     });
 
@@ -150,7 +234,7 @@ void main() {
         }),
       );
 
-      expect(service.postStreaming(sampleUrl, body: samplePayload), emitsDone);
+      expect(service.postStreaming(sampleUrl), emitsDone);
     });
 
     test('200 response, single data response', () async {
@@ -161,9 +245,10 @@ void main() {
       );
 
       expect(
-        service.postStreaming(sampleUrl, body: samplePayload),
+        service.postStreaming(sampleUrl),
         emitsInOrder([
           {'fruit': 'apple'},
+          emitsDone,
         ]),
       );
     });
@@ -179,10 +264,11 @@ void main() {
       );
 
       expect(
-        service.postStreaming(sampleUrl, body: samplePayload),
+        service.postStreaming(sampleUrl),
         emitsInOrder([
           {'fruit': 'apple'},
           {'fruit': 'banana'},
+          emitsDone,
         ]),
       );
     });
@@ -198,39 +284,13 @@ void main() {
       );
 
       expect(
-        service.postStreaming(sampleUrl, body: samplePayload),
+        service.postStreaming(sampleUrl),
         emitsInOrder([
           {'fruit': 'apple'},
           {'fruit': 'banana'},
+          emitsDone,
         ]),
       );
     });
-  });
-
-  test('put', () async {
-    final service = ServiceClient(client: httpClient!);
-
-    await service.put(sampleUrl, body: samplePayload);
-
-    expect(request!.method, 'PUT');
-    expect(request!.headers.keys, contains('x-goog-api-client'));
-  });
-
-  test('patch', () async {
-    final service = ServiceClient(client: httpClient!);
-
-    await service.patch(sampleUrl, body: samplePayload);
-
-    expect(request!.method, 'PATCH');
-    expect(request!.headers.keys, contains('x-goog-api-client'));
-  });
-
-  test('delete', () async {
-    final service = ServiceClient(client: httpClient!);
-
-    await service.delete(sampleUrl);
-
-    expect(request!.method, 'DELETE');
-    expect(request!.headers.keys, contains('x-goog-api-client'));
   });
 }
