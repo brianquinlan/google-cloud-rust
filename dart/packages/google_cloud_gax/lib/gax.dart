@@ -79,7 +79,10 @@ class ServiceException implements Exception {
   String toString() => 'ServiceException: $message';
 
   factory ServiceException.fromStatus(Status status) {
-    return ServiceException(status.message ?? 'unknown error', status: status);
+    return ServiceException(
+      status.message ?? 'status returned without message',
+      status: status,
+    );
   }
 }
 
@@ -201,7 +204,6 @@ class ServiceClient {
     try {
       json = jsonDecode(responseBody);
     } on FormatException {
-      // Return a general HTTP exception if we can't parse the Status response.
       throw ServiceException('invalid JSON response from server');
     }
 
