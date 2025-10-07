@@ -61,7 +61,7 @@ abstract class ProtoEnum implements JsonEncodable {
   int get hashCode => value.hashCode;
 }
 
-/// Exception thrown when a service method returns an error.
+/// Exception thrown when a [ServiceClient] methods returns an error.
 ///
 /// You can find out more about this error model and how to work with it in the
 /// [API Design Guide](https://cloud.google.com/apis/design/errors).
@@ -70,7 +70,7 @@ class ServiceException implements Exception {
 
   /// The status message returned by the server.
   ///
-  /// If `status` is `null` then the server returned an invalid response.
+  /// If `status` is `null` then the server did not return a status message.
   final Status? status;
 
   ServiceException(this.message, {this.status});
