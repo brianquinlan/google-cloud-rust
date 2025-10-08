@@ -61,29 +61,39 @@ abstract class ProtoEnum implements JsonEncodable {
   int get hashCode => value.hashCode;
 }
 
-/// Exception thrown when a [ServiceClient] methods returns an error.
+/// Exception thrown when a [ServiceClient] fails.
+final class ServiceException implements Exception {
+  /// A message describing the cause of the exception.
+  final String message;
+
+  /// The server response that caused the exception.
+  final String? responseBody;
+
+  ServiceException(this.message, {this.responseBody});
+
+  @override
+  String toString() {
+    final body = responseBody != null
+        ? ', responseBody=${Error.safeToString(responseBody)}'
+        : '';
+    return '$message$body';
+  }
+}
+
+/// Exception thrown when a [ServiceClient] method fails with a [Status]
+/// indicating an error.
 ///
 /// You can find out more about this error model and how to work with it in the
 /// [API Design Guide](https://cloud.google.com/apis/design/errors).
-class ServiceException implements Exception {
-  final String message;
-
+final class StatusException extends ServiceException {
   /// The status message returned by the server.
-  ///
-  /// If `status` is `null` then the server did not return a status message.
-  final Status? status;
+  final Status status;
 
-  ServiceException(this.message, {this.status});
+  StatusException.fromStatus(this.status, {super.responseBody})
+    : super(status.message ?? 'status returned without message');
 
   @override
   String toString() => 'ServiceException: $message';
-
-  factory ServiceException.fromStatus(Status status) {
-    return ServiceException(
-      status.message ?? 'status returned without message',
-      status: status,
-    );
-  }
 }
 
 class ServiceClient {
@@ -204,17 +214,23 @@ class ServiceClient {
     try {
       json = jsonDecode(responseBody);
     } on FormatException {
-      throw ServiceException('invalid JSON response from server');
+      throw ServiceException(
+        'Invalid JSON response from server',
+        responseBody: responseBody,
+      );
     }
 
     final Status status;
     try {
       status = Status.fromJson(json['error']);
     } on TypeError {
-      throw ServiceException('unexpected response format from server');
+      throw ServiceException(
+        'unexpected response format from server',
+        responseBody: responseBody,
+      );
     }
 
-    throw ServiceException.fromStatus(status);
+    throw StatusException.fromStatus(status, responseBody: responseBody);
   }
 }
 
