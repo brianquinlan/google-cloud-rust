@@ -76,7 +76,7 @@ final class ServiceException implements Exception {
     final body = responseBody != null
         ? ', responseBody=${Error.safeToString(responseBody)}'
         : '';
-    return '$message$body';
+    return 'ServiceException: $message$body';
   }
 }
 
@@ -93,7 +93,7 @@ final class StatusException extends ServiceException {
     : super(status.message ?? 'status returned without message');
 
   @override
-  String toString() => 'ServiceException: $message';
+  String toString() => 'StatusException: $message';
 }
 
 class ServiceClient {
